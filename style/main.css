@@ -1,0 +1,409 @@
+/*!*
+ * Template: Capri
+ *
+ * @copyright (c) 2011 Rotorz Limited. All rights reserved.
+ * @author Lea Hayes <lea@rotorz.com>
+ */
+
+@import url('reset.css');
+
+/* Basic styles
+-------------------------------------------------------------------*/
+html, body {
+	min-height: 100%;
+	height: 100%;
+
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
+	font-size: 13px;
+	line-height: 150%;
+	list-style-type: none;
+}
+
+html {
+	overflow-y: scroll;
+
+	background: #111417 url('../img/bk-tile.jpg') fixed repeat-x center top;
+}
+
+a {
+	color: #1d57de;
+	text-decoration: none;
+}
+a:hover,
+a:active {
+	color: #ff5900;
+}
+
+h1 {
+	margin: 8pt 0 16pt;
+	padding-bottom: 10pt;
+
+	border-bottom: dotted 1px #ddd;
+
+	letter-spacing: -0.03em;
+	font-size: 32px;
+	font-weight: bold;
+}
+h2 {
+	margin: 6pt 0 8pt;
+
+	letter-spacing: -0.03em;
+	font-size: 22px;
+	font-weight: bold;
+}
+h3 {
+	margin: 6pt 0 8pt;
+
+	letter-spacing: -0.03em;
+	font-size: 20px;
+	font-weight: bold;
+}
+h4 {
+	margin: 18px 0 6px;
+	padding-top: 8pt;
+
+	border-top: dotted 1px #ddd;
+
+	letter-spacing: -0.03em;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ff7f12;
+}
+	dt:first-child h4,
+	h4.first {
+		padding-top: 0;
+
+		border-top: none;
+	}
+h5 {
+	margin: 8px 0 3px -16px;
+
+	letter-spacing: -0.03em;
+	font-size: 16px;
+	font-weight: bold;
+}
+h6 {
+	margin: 6px 0 3px;
+
+	letter-spacing: -0.03em;
+	font-size: 13px;
+	font-style: italic;
+}
+
+.clear {
+	clear: both;
+}
+
+/* Template
+-------------------------------------------------------------------*/
+.wrap {
+	position: relative;
+	margin: 0 auto;
+	width: 1022px;
+	min-height: 100%;
+
+	background: #fff;
+
+	box-shadow: 0px 0px 18px 8px #000;
+	-webkit-box-shadow: 0px 0px 18px 8px #000;
+	-moz-box-shadow: 0px 0px 18px 8px #000;
+}
+
+#page-header {
+	height: 158px;
+
+	background: url('../img/docs-header.jpg') no-repeat left top;
+}
+	.index-page #page-header {
+		height: 362px;
+
+		background: url('../img/index-header.jpg') no-repeat left top;
+	}
+	.intro-page #page-header {
+		height: 215px;
+
+		background: url('../img/header.jpg') no-repeat left top;
+	}
+
+#page-header .site-nav {
+	position: absolute;
+	top: 0; right: 40px;
+
+	background: #4b4a49 url('../img/nav-bk-tile.jpg') repeat-x left top;
+}
+#page-header .site-nav,
+#page-header .site-nav .first a {
+	border-bottom-left-radius: 11px;
+	-moz-border-radius-bottomleft: 11px;
+	-webkit-border-bottom-left-radius: 11px;
+}
+#page-header .site-nav,
+#page-header .site-nav .last a {
+	border-bottom-right-radius: 11px;
+	-moz-border-radius-bottomright: 11px;
+	-webkit-border-bottom-right-radius: 11px;
+}
+	#page-header .site-nav li,
+	#page-header .site-nav li a {
+		display: block;
+		float: left;
+	}
+	#page-header .site-nav li a {
+		padding: 9px 23px 11px;
+
+		font-size: 12pt;
+		text-decoration: none;
+		color: #fff;
+	}
+		#page-header .site-nav li a:hover,
+		#page-header .site-nav li a:active,
+		#page-header .site-nav li a:focus {
+			background: #ff8521 url('../img/nav-bk-hot.jpg') repeat-x left top;
+		}
+
+#page-header .home {
+	position: absolute;
+	top: 47px; left: 108px;
+}
+
+#page-header #find-out-more {
+	position: absolute;
+	top: 141px; left: 29px;
+}
+	.index-page #page-header #find-out-more {
+		top: 277px; left: 362px;
+	}
+#page-header #find-out-more span {
+	display: block;
+	width: 197px;
+	height: 43px;
+
+	background: url('../img/find-out-more.png') no-repeat left top;
+}
+	#page-header #find-out-more:hover span,
+	#page-header #find-out-more:focus span {
+		background: url('../img/find-out-more-hot.png') no-repeat left top;
+	}
+	#page-header #find-out-more:active span {
+		background: url('../img/find-out-more-down.png') no-repeat left top;
+	}
+
+#page-header #download-standalone {
+	position: absolute;
+	top: 125px; left: 497px;
+}
+	.index-page #page-header #download-standalone {
+		top: 167px; left: 752px;
+	}
+#page-header #download-plugin {
+	position: absolute;
+	top: 125px; left: 757px;
+}
+	.index-page #page-header #download-plugin {
+		top: 261px; left: 752px;
+	}
+#page-header #download-standalone span,
+#page-header #download-plugin span {
+	display: block;
+	width: 247px;
+	height: 76px;
+}
+#page-header #download-standalone span {
+	background: url('../img/download-standalone.png') no-repeat left top;
+}
+	#page-header #download-standalone:hover span,
+	#page-header #download-standalone:focus span {
+		background: url('../img/download-standalone-hot.png') no-repeat left top;
+	}
+	#page-header #download-standalone:active span {
+		background: url('../img/download-standalone-down.png') no-repeat left top;
+	}
+#page-header #download-plugin span {
+	background: url('../img/download-plugin.png') no-repeat left top;
+}
+	#page-header #download-plugin:hover span,
+	#page-header #download-plugin:focus span {
+		background: url('../img/download-plugin-hot.png') no-repeat left top;
+	}
+	#page-header #download-plugin:active span {
+		background: url('../img/download-plugin-down.png') no-repeat left top;
+	}
+
+.content-wrap {
+	padding-bottom: 61px; /* Space for footer */
+}
+	.capri-api-docs .content-wrap {
+		background: url('../img/sidebar-bk.jpg') repeat-y right top;
+	}
+
+section.content {
+	padding: 14pt;
+}
+
+#page-footer {
+	position: absolute;
+	bottom: 0; right: 0; left: 0;
+	height: 61px;
+	overflow: hidden;
+
+	border-top: solid 1px #918993;
+
+	background: #dbdbe1 url('../img/footer-bk.jpg') repeat-x left bottom;
+}
+#page-footer .rotorz-home {
+	display: block;
+	position: absolute;
+	bottom: 0; left: 0;
+	width: 153px;
+	height: 61px;
+}
+#page-footer nav {
+	position: absolute;
+	right: 14px;
+}
+#page-footer nav li,
+#page-footer nav li a {
+	display: block;
+	float: left;
+}
+#page-footer nav li a {
+	padding: 4pt 4pt;
+
+	font-size: 10.5pt;
+	text-decoration: none;
+	color: #444;
+}
+	#page-footer nav li a:hover,
+	#page-footer nav li a:active,
+	#page-footer nav li a:focus {
+		text-decoration: underline;
+		color: #800000;
+	}
+#page-footer small {
+	position: absolute;
+	right: 14px; bottom: 14px;
+
+	font-size: 8pt;
+	color: #626262;
+}
+
+/* Sub-Navigation
+-------------------------------------------------------------------*/
+#page-header .sub-nav {
+	position: absolute;
+	top: 115px; left: 0; right: 0;
+}
+#page-header .sub-nav ul li,
+#page-header .sub-nav ul li a {
+	display: block;
+	float: left;
+}
+#page-header .sub-nav ul li a {
+	padding: 9pt 12pt;
+
+	font-size: 14pt;
+	text-decoration: none;
+	color: #fff;
+}
+	#page-header .sub-nav ul li a:hover,
+	#page-header .sub-nav ul li a:active,
+	#page-header .sub-nav ul li a:focus {
+		background-color: #ff7f12;
+		cursor: pointer;
+	}
+
+/* Feed
+-------------------------------------------------------------------*/
+.index-page .content {
+	float: left;
+	width: 600px;
+}
+.index-page .sidebar {
+	float: right;
+	width: 360px;
+	padding: 10pt;
+}
+
+#feed {
+	display: none;
+	clear: left;
+}
+#feed li {
+	margin-top: 4pt;
+	padding-top: 2pt;
+
+	border-top: dotted 1px #ddd;
+}
+#feed li .timestamp {
+	display: block;
+	float: left;
+	width: 100px;
+
+	color: #777;
+}
+#feed li a {
+	display: block;
+	float: left;
+	width: 240px;
+}
+
+#feed .subscribe {
+	display: block;
+	float: left;
+	margin-top: 4pt;
+	padding-left: 22px;
+	line-height: 22px;
+
+	background: url('../img/rss.png') no-repeat left center;
+}
+
+#twitter-feed {
+	clear: left;
+	padding: 6pt 0;
+}
+#twitter-feed li .timestamp {
+	display: block;
+	margin-top: 4pt;
+	padding-top: 2pt;
+
+	border-top: dotted 1px #ddd;
+
+	color: #777;
+}
+.twitter-follow-button {
+	clear: left;
+	margin-top: 6pt;
+}
+
+.ajax-loading {
+	background: url('../img/ajax-loader.gif') no-repeat right top;
+	min-height: 24px;
+}
+
+/* Columns
+-------------------------------------------------------------------*/
+.left-column {
+	float: left;
+	width: 50%;
+}
+.right-column {
+	float: right;
+	width: 50%;
+}
+
+/* Info Pages
+-------------------------------------------------------------------*/
+.info-page p {
+	margin: 7pt 0;
+}
+
+.info-page dl > dt {
+	font-weight: bold;
+}
+.info-page dl > dd {
+	margin-left: 18pt;
+}
+
+.narrow-page section.content {
+	padding: 14pt 190pt 14pt 52pt;
+}

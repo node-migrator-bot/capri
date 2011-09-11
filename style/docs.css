@@ -1,0 +1,262 @@
+/*!*
+ * Template: Capri
+ *
+ * @copyright (c) 2011 Rotorz Limited. All rights reserved.
+ * @author Lea Hayes <lea@rotorz.com>
+ */
+
+/* Content
+-------------------------------------------------------------------*/
+#doc-content .container-type {
+	float: right;
+
+	vertical-align: bottom;
+	font-size: 22px;
+	font-style: italic;
+	color: #ccc;
+}
+#doc-content .container-body {
+	margin-left: 16pt;
+	margin-bottom: 10pt;
+}
+	#doc-content .container-body h4 {
+		margin: 0 0 0 -16pt;
+
+		border: none;
+	}
+
+#doc-content article dd {
+	margin-left: 16pt;
+}
+
+#doc-content .description ul,
+#doc-content .description ul li,
+#doc-content .summary ul,
+#doc-content .summary ul li {
+	list-style-type: disc;
+	list-style-position: outside;
+}
+#doc-content .description ul,
+#doc-content .summary ul {
+	padding: 3pt;
+}
+#doc-content .description ul li,
+#doc-content .summary ul li {
+	margin-left: 16pt;
+}
+
+#doc-content .para,
+#doc-content .description p,
+#doc-content .summary p {
+	margin: 7pt 0;
+}
+
+#doc-content li .para {
+	margin: 0;
+}
+
+#doc-content td .para:first-child {
+	margin-top: 0;
+}
+#doc-content td .para:last-child {
+	margin-bottom: 0;
+}
+
+#doc-content article .toc,
+#doc-content article .todo {
+	margin-left: 36pt;
+	list-style-type: disc;
+	list-style-position: outside;
+}
+	#doc-content article .toc li,
+	#doc-content article .todo li {
+		list-style-type: disc;
+		list-style-position: outside;
+	}
+	#doc-content article .toc .summary {
+		margin-left: 16pt;
+	}
+
+#doc-content dl.terms {
+	margin: 8pt 8pt 8pt 24pt;
+}
+	#doc-content dl.terms dt {
+		font-weight: bold;
+	}
+
+/* Structure
+-------------------------------------------------------------------*/
+#doc-content {
+	float: left;
+	width: 751px;
+}
+
+#doc-content section {
+	display: block;
+	padding: 12px 24px;
+
+	background-color: #fff;
+}
+
+.generator {
+	display: block;
+	margin: 18px 275px 12px 5px;
+	padding: 6px;
+
+	border-top: dotted 1px #ddd;
+
+	text-align: center;
+	font-style: italic;
+	font-size: 11px;
+	color: #555;
+}
+
+#doc-content .breadcrumbs {
+	margin-bottom: 14pt;
+}
+	.breadcrumbs span {
+		margin: 0 4pt;
+	}
+
+/* Navigation
+-------------------------------------------------------------------*/
+#doc-nav {
+	display: block;
+	float: right;
+	width: 245px;
+
+	overflow: hidden;
+}
+#doc-nav a {
+	color: #444;
+}
+	#doc-nav a:hover,
+	#doc-nav a:active,
+	#doc-nav a:focus {
+		color: #800000;
+	}
+#doc-nav ul ul {
+	margin-left: 14pt;
+}
+#doc-nav li {
+	line-height: 170%;
+}
+#doc-nav h3 {
+	margin-bottom: 4pt;
+}
+
+/* Details
+-------------------------------------------------------------------*/
+#doc-content dl.details {
+	margin-left: 14pt;
+}
+
+#doc-content .details dt.detail-default-value {
+	font-weight: bold;
+}
+
+#doc-content .details .detail-see {
+	margin-bottom: 6pt;
+}
+#doc-content .details dt.detail-see {
+	font-weight: bold;
+}
+
+#doc-content .details .detail-requires {
+	margin-top: 6pt;
+	margin-bottom: 6pt;
+}
+
+#doc-content .details dt,
+#doc-content .type-details dt {
+	float: left;
+	margin-left: 14pt;
+}
+#doc-content .details dd,
+#doc-content .type-details dd {
+	margin-left: 120px;
+}
+
+#doc-content .details .detail-since {
+	padding-top: 6pt;
+}
+
+#doc-content .details dt.detail-source,
+#doc-content .details dd.detail-source {
+    color: #777;
+}
+
+/* Extends
+-------------------------------------------------------------------*/
+#doc-content .extends {
+	margin: 10px 30px 15px 0px;
+}
+#doc-content .extends div div {
+	margin-left: 30px;
+}
+
+/* Parameters
+-------------------------------------------------------------------*/
+#doc-content .params {
+	border-spacing: 0;
+	border: 0;
+	border-collapse: collapse;
+}
+
+#doc-content .params .name {
+	color: #de6114;
+}
+
+#doc-content .params td,
+#doc-content .params th {
+	display: table-cell;
+	margin: 0px;
+	padding: 4px 6px;
+
+	border: 1px solid #ddd;
+
+	text-align: left;
+	vertical-align: top;
+}
+
+#doc-content .params thead tr {
+	background-color: #ddd;
+	font-weight: bold;
+}
+
+#doc-content .params .params thead tr {
+	background-color: #fff;
+	font-weight: bold;
+}
+
+#doc-content .params th {
+	border-right: 1px solid #aaa;
+}
+#doc-content .params thead .last {
+	border-right: 1px solid #ddd;
+}
+
+#doc-content .type-signature {
+	color: #aaa;
+}
+	a .type-signature {
+		color: #aaa;
+	}
+	a:hover .type-signature {
+		color: #cc4000;
+	}
+
+/* Example
+-------------------------------------------------------------------*/
+#doc-content .example-caption {
+	margin: 4pt 0 0;
+
+	font-style: italic;
+	font-family: Palatino, 'Palatino Linotype', serif;
+	font-size: 14px;
+}
+#doc-content pre.example {
+	margin: 2pt 0 0;
+
+	border: 1px solid #ddd;
+}

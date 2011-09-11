@@ -1,0 +1,354 @@
+/*!*
+ * Template: Default
+ *
+ * @copyright (c) 2011 Rotorz Limited. All rights reserved.
+ * @author Lea Hayes <lea@rotorz.com>
+ */
+
+@import url('reset.css');
+
+/* Basic styles
+-------------------------------------------------------------------*/
+html, body {
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
+	font-size: 13px;
+	line-height: 150%;
+	list-style-type: none;
+}
+
+html {
+	overflow-y: scroll;
+}
+
+a {
+	color: #444;
+	text-decoration: none;
+}
+a:hover,
+a:active {
+	color: #800000;
+}
+
+h1 {
+	margin: 8pt 0 16pt;
+	padding-bottom: 10pt;
+
+	border-bottom: dotted 1px #ddd;
+
+	letter-spacing: -0.03em;
+	font-size: 32px;
+	font-weight: bold;
+}
+h2 {
+	margin: 6pt 0 8pt;
+
+	letter-spacing: -0.03em;
+	font-size: 22px;
+	font-weight: bold;
+}
+h3 {
+	margin: 6pt 0 8pt;
+
+	letter-spacing: -0.03em;
+	font-size: 20px;
+	font-weight: bold;
+}
+h4 {
+	margin: 18px 0 6px;
+	padding-top: 8pt;
+
+	border-top: dotted 1px #ddd;
+
+	letter-spacing: -0.03em;
+	font-size: 18px;
+	font-weight: bold;
+	color: #A35A00;
+}
+	dt:first-child h4,
+	h4.first {
+		padding-top: 0;
+
+		border-top: none;
+	}
+h5 {
+	margin: 8px 0 3px -16px;
+
+	letter-spacing: -0.03em;
+	font-size: 16px;
+	font-weight: bold;
+}
+h6 {
+	margin: 6px 0 3px;
+
+	letter-spacing: -0.03em;
+	font-size: 13px;
+	font-style: italic;
+}
+
+.clear {
+	clear: both;
+}
+
+/* Content
+-------------------------------------------------------------------*/
+.container-type {
+	float: right;
+
+	vertical-align: bottom;
+	font-size: 22px;
+	font-style: italic;
+	color: #ccc;
+}
+.container-body {
+	margin-left: 16pt;
+	margin-bottom: 10pt;
+}
+	.container-body h4 {
+		margin: 0 0 0 -16pt;
+
+		border: none;
+	}
+
+article dd {
+	margin-left: 16pt;
+}
+
+.description ul,
+.description ul li,
+.summary ul,
+.summary ul li {
+	list-style-type: disc;
+	list-style-position: outside;
+}
+.description ul,
+.summary ul {
+	padding: 3pt;
+}
+.description ul li,
+.summary ul li {
+	margin-left: 16pt;
+}
+
+.para,
+.description p,
+.summary p {
+	margin: 7pt 0;
+}
+
+li .para {
+	margin: 0;
+}
+
+td .para:first-child {
+	margin-top: 0;
+}
+td .para:last-child {
+	margin-bottom: 0;
+}
+
+article .toc,
+article .todo {
+	margin-left: 36pt;
+	list-style-type: disc;
+	list-style-position: outside;
+}
+	article .toc li,
+	article .todo li {
+		list-style-type: disc;
+		list-style-position: outside;
+	}
+	article .toc .summary {
+		margin-left: 16pt;
+	}
+
+dl.terms {
+	margin: 8pt 8pt 8pt 24pt;
+}
+	dl.terms dt {
+		font-weight: bold;
+	}
+
+/* Structure
+-------------------------------------------------------------------*/
+.content-wrap {
+	float: left;
+	width: 100%;
+}
+
+section {
+	display: block;
+	margin-right: 240px;
+	padding: 12px 24px;
+
+	border-bottom: 1px solid #ccc;
+
+	background-color: #fff;
+}
+
+footer {
+	display: block;
+	margin-top: 12px;
+	padding: 6px;
+
+	font-style: italic;
+	font-size: 11px;
+}
+
+.breadcrumbs {
+	margin-bottom: 14pt;
+}
+	.breadcrumbs span {
+		margin: 0 4pt;
+	}
+
+/* Navigation
+-------------------------------------------------------------------*/
+nav {
+	display: block;
+	float: right;
+	margin-left: -230px;
+	margin-top: 28px;
+	width: 220px;
+	padding-left: 9px;
+
+	overflow: hidden;
+
+	border-left: 1px solid #ccc;
+}
+	nav li {
+		line-height: 170%;
+	}
+	nav h3 {
+		margin-bottom: 4pt;
+	}
+
+/* Details
+-------------------------------------------------------------------*/
+dl.details {
+	margin-left: 14pt;
+}
+
+.details dt.detail-default-value {
+	font-weight: bold;
+}
+
+.details .detail-see {
+	margin-bottom: 6pt;
+}
+.details dt.detail-see {
+	font-weight: bold;
+}
+
+.details .detail-requires {
+	margin-top: 6pt;
+	margin-bottom: 6pt;
+}
+
+.details dt,
+.type-details dt {
+	float: left;
+	margin-left: 14pt;
+}
+.details dd,
+.type-details dd {
+	margin-left: 120px;
+}
+
+.details .detail-since {
+	padding-top: 6pt;
+}
+
+.details dt.detail-source,
+.details dd.detail-source {
+    color: #777;
+}
+
+/* Extends
+-------------------------------------------------------------------*/
+.extends {
+	margin: 10px 30px 15px 0px;
+}
+.extends div div {
+	margin-left: 30px;
+}
+
+/* Parameters
+-------------------------------------------------------------------*/
+.params {
+	border-spacing: 0;
+	border: 0;
+	border-collapse: collapse;
+}
+
+.params .name {
+	color: #1c02a3;
+}
+
+.params td,
+.params th {
+	display: table-cell;
+	margin: 0px;
+	padding: 4px 6px;
+
+	border: 1px solid #ddd;
+
+	text-align: left;
+	vertical-align: top;
+}
+
+.params thead tr {
+	background-color: #ddd;
+	font-weight: bold;
+}
+
+.params .params thead tr {
+	background-color: #fff;
+	font-weight: bold;
+}
+
+.params th {
+	border-right: 1px solid #aaa;
+}
+.params thead .last {
+	border-right: 1px solid #ddd;
+}
+
+.type-signature {
+	color: #aaa;
+}
+	a .type-signature {
+		color: #aaa;
+	}
+	a:hover .type-signature {
+		color: #cc4000;
+	}
+
+/* Example
+-------------------------------------------------------------------*/
+.example-caption {
+	margin: 4pt 0 0;
+
+	font-style: italic;
+	font-family: Palatino, 'Palatino Linotype', serif;
+	font-size: 14px;
+}
+pre.example {
+	margin: 2pt 0 0;
+	width: 80%;
+
+	border: 1px solid #ddd;
+}
+
+pre.example code {
+	display: block;
+	margin: 0;
+	padding: 4px 12px;
+	line-height: 18px;
+
+	border-left: 3px #ddd solid;
+
+	font-family: Consolas, 'Lucida Console', Monaco, monospace;
+	font-size: 12px;
+	background-color: #fff;
+	color: #000;
+}
