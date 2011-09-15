@@ -251,7 +251,7 @@ h6 {
 	}
 
 .content-wrap {
-	padding-bottom: 61px; /* Space for footer */
+	padding-bottom: 81px; /* Space for footer */
 }
 	.capri-api-docs .content-wrap {
 		background: url('../img/sidebar-bk.jpg') repeat-y right top;
@@ -262,7 +262,9 @@ section.content {
 }
 
 #website-license {
-	padding: 8pt 0 8pt 3pt;
+	position: absolute;
+	right: 0; bottom: 56px; left: 0;
+	padding: 8pt 0 8pt 2pt;
 
 	font-size: 8pt;
 }
