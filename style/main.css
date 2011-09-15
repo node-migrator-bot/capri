@@ -94,6 +94,27 @@ h6 {
 	clear: both;
 }
 
+.info-box {
+	margin: 14pt 0;
+	padding: 3pt 0;
+
+	border-top: solid 2px #ff7f12;
+	border-bottom: solid 2px #ff7f12;
+}
+
+.info-page section.content ul,
+.info-page section.content ul li {
+	list-style-type: disc;
+}
+.info-page section.content ol,
+.info-page section.content ol li {
+	list-style-type: decimal;
+}
+.info-page section.content ul,
+.info-page section.content ol {
+	padding-left: 24pt;
+}
+
 /* Template
 -------------------------------------------------------------------*/
 .wrap {
@@ -386,10 +407,40 @@ section.content {
 	float: left;
 	width: 50%;
 }
+	.left-column pre code {
+		border-right: none;
+	}
 .right-column {
 	float: right;
 	width: 50%;
 }
+
+.source-columns {
+	margin-right: -100px;
+
+	border-left: solid 5px #ff7f12;
+
+	background-color: #141414;
+}
+	.source-columns h6 {
+		padding-left: 5pt;
+
+		border-bottom: dotted 1px #222;
+
+		color: #fff;
+	}
+	.source-columns code {
+		border: none !important;
+	}
+	.source-columns .left-column {
+		margin-right: -5px;
+	}
+	.source-columns .right-column {
+		margin-right: -1px;
+
+		border-left: solid 5px #ff7f12;
+		border-right: solid 2px #ff7f12;
+	}
 
 /* Info Pages
 -------------------------------------------------------------------*/
@@ -405,5 +456,5 @@ section.content {
 }
 
 .narrow-page section.content {
-	padding: 14pt 190pt 14pt 52pt;
+	padding: 14pt 160pt 14pt 52pt;
 }

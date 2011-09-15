@@ -1,0 +1,81 @@
+ <!DOCTYPE html> <html> <head> <title>About &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> </head> <body class="info-page intro-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <a id="download-standalone" href="https://github.com/downloads/rotorz/capri/capri.min.js" title="Download standalone version"><span></span></a> <a id="download-plugin" href="https://github.com/downloads/rotorz/capri/jquery.capri.min.js" title="Download jQuery plugin version"><span></span></a> <a id="find-out-more" href="http://capri.rotorz.com/about.html" title="Find out more!"><span></span></a> </header> <div class="content-wrap"> <section class="content"> <h1>About</h1> <h2>Prelude</h2> <p>JavaScript is an extremely powerful and expressive scripting language that is used extensively by websites and web applications. Additionally the <a href="http://code.google.com/p/v8/">V8</a> JavaScript engine would serve as a fantastic script engine for video games and offline applications.</p> <p>Object-oriented programming (OOP) is nothing new to JavaScript developers. JavaScript offers prototype based classes which can be instantiated and have member fields, methods and a constructor. Each instance member must be assigned using the <samp>prototype</samp> object. Whilst this does mean a little more typing, it does provide an excellent solution...until class inheritance (aka extends) comes into play.</p> <p>For small scripts this doesn't really pose much of an issue. This does become a problem for those who prefer to use classical OOP design patterns when developing complex applications.</p> <h2>What is Capri?</h2> <p>The fundamental purpose of Capri is to provide the ability to define and extend classes and namespaces in a way that is clean and easy to understand. The secondary purpose of Capri is to provide a reusable toolset that caters to common needs.</p> <p>Capri is modular so developers can decide whether to use one of the standard distributions, or to create a custom combination of modules (available individually from <a href="http://github.com/rotorz/capri">repository</a>).</p> <div class="info-box"><strong>Important:</strong> "intro.js" module <em>must</em> be included at start of Capri script.</div> <div class="source-columns"> <section class="left-column"> <h6>With Capri</h6> <pre class="sh_sourceCode sh_javascript"><code>
+ // define class
+ $class('my.Greeting', {
+    __construct: function(name) {
+       this.name = name;
+    },
+    message: function() {
+       return 'Hey, ' + this.name + '!';
+    }
+ });
+ 
+ // using class
+ var greet = new my.Greeting('Slartibartfast');
+ alert(greet.message());
+ 		</code></pre> </section> <section class="right-column"> <h6>Without Capri</h6> <pre class="sh_sourceCode sh_javascript"><code>
+ // define namespace if not already defined
+ if (my === undefined)
+    my = {};
+ 
+ // define class
+ my.Greeting = function(name) {
+    this.name = name;
+ };
+ my.Greeting.prototype.message = function() {
+    return 'Hey, ' + this.name + '!';
+ };
+ 
+ // using class
+ var greet = new my.Greeting('Slartibartfast');
+ alert(greet.message());
+ 		</code></pre> </section> <div class="clear"></div> </div> <p>Refer to <a href="http://capri.rotorz.com/tutorials.html">tutorial pages</a> for more detailed explanations of classes.</p> <p>Adding custom functionality to namespaces can be cumbersome especially with nesting. The Capri <samp>$namespace</samp> function provides access to a namespace regardless of whether the namespace has been defined. The function also makes it easy to add to an existing (or new) namespace: <div class="source-columns"> <section class="left-column"> <h6>With Capri</h6> <pre class="sh_sourceCode sh_javascript"><code>
+ // add function to deep namespace
+ $namespace('my.app.util', {
+    sonic: function() {
+       return 'Fish fingers and custard';
+    }
+ });
+ 
+ // usage
+ var msg = my.app.util.sonic();
+ 		</code></pre> </section> <section class="right-column"> <h6>Without Capri</h6> <pre class="sh_sourceCode sh_javascript"><code>
+ // define namespaces if not already defined
+ if (my === undefined)
+    my = {};
+ if (my.app === undefined)
+    my.app = {};
+ if (my.app.util === undefined)
+    my.app.util = {};
+ 
+ // add function to deep namespace
+ my.app.util.sonic = function() {
+    return 'Fish fingers and custard';
+ };
+ 
+ // usage
+ var msg = my.app.util.sonic();
+ 		</code></pre> </section> <div class="clear"></div> </div> <h2>What is jQuery?</h2> <p><a href="http://www.jquery.com">jQuery</a> is an excellent framework that make it extremely easy (and fun) to manipulate DOM elements. In a nutshell it allows developers to select elements using CSS3 compliant selectors. The returned set of elements can then be manipulated in various ways to add interactivity (and a little flare!)</p> <p>Some Capri modules require the jQuery library in order to function. For convenience two variants of Capri are provided; one that doesn't depend upon jQuery (standalone), and another that does (jQuery plugin).</p> <div class="info-box"><strong>Note:</strong> jQuery should be included before jQuery plugin variant.</div> <h2>How does the Capri jQuery plugin extend jQuery?</h2> <p>Capri provides an alternative widget architecture that is object-oriented, supports namespaces and integrates into jQuery as a plugin called <samp>widget</samp>. <p>A large web application can be spread across multiple scripts:</p> <ul> <li>Easier to maintain.</li> <li>Allows team members to work on their designated scripts.</li> <li>Avoids large script dependancy when website is first loaded because scripts can be loaded on demand.</li> </ul> <p>Scripts and styles can be included dynamically. There are a variety of ways in which this can be achieved, but not all work across all major web browsers. Capri aims to simplify this task. It is even easier if the base address of the application is specified:</p> <pre class="sh_sourceCode sh_javascript"><code>
+ // define base address of application
+ capri.DocumentManager.setBaseUri('http://example.com/app');
+ 
+ // include a stylesheet and several scripts upon startup
+ $include('~/css/editor.css');
+ $include('~/js/editor.js');
+ $include('~/js/converter.js', function() {
+    // this callback is invoked once prior includes have been included
+    example.converter.init();
+ });
+ 
+ // initialise page once both page and includes have been loaded
+ $startup(function() {
+    $('#my-button').click(function() {
+       // dynamically load script when button is clicked
+       $include('~/js/profile.js', function() {
+          // callback once included!
+       });
+ 
+       // include all queued scripts and styles
+       $include.process();
+    });
+ });
+ </code></pre> </section> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>

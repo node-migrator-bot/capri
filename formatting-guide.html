@@ -1,0 +1,98 @@
+ <!DOCTYPE html> <html> <head> <title>Formatting Guide &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> </head> <body class="info-page intro-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <a id="download-standalone" href="https://github.com/downloads/rotorz/capri/capri.min.js" title="Download standalone version"><span></span></a> <a id="download-plugin" href="https://github.com/downloads/rotorz/capri/jquery.capri.min.js" title="Download jQuery plugin version"><span></span></a> <a id="find-out-more" href="http://capri.rotorz.com/about.html" title="Find out more!"><span></span></a> </header> <div class="content-wrap"> <section class="content"> <h1>Formatting Guide</h1> <p>This guide explains some of our formatting requirements. Please refer to existing source code if you are unsure as to how to format your code. Clean code is happy code!</p> <h2>Whitespace</h2> <p>Use a single blank line to separate related (but separate logic). Think of it as paragraphs of code.</p> <pre class="sh_sourceCode sh_javascript"><code>
+ capri.parseArgs = function(args, defaults, delimiter) {
+    if (!args)
+       args = {};
+    else if (typeof args === 'string')
+       args = capri.parseString(args, delimiter || ';');
+ 
+    if (typeof defaults === 'string')
+       defaults = capri.parseString(defaults, delimiter || ';');
+    else if (!defaults)
+       defaults = {};
+ 
+    for (var key in defaults)
+       if (args[ key ] === undefined || args[ key ] === null)
+          args[ key ] = defaults[ key ];
+ 
+    return args;
+ };
+ </code></pre> <p>Please use <em>tab characters</em> to indent code blocks appropriately (not spaces!).</p> <div class="info-box"><strong>Remember,</strong> whitespace and comments are free! They will be removed from minified distribution.</div> <h2>Commenting</h2> <p>Single-line comments should provide meaningful insight that cannot otherwise be deduced from reading the code. It is safe to assume that developers understand how the programming language works.</p> <div class="source-columns"> <section class="left-column"> <h6>The Good</h6> <pre class="sh_sourceCode sh_javascript"><code>
+ // Do callbacks exist?
+ if (typeof action === 'object') {
+    // Prepare arguments for use.
+    if (capri.typeOf(params) === 'function')
+       params = params();
+ ...
+ }
+ 		</code></pre> </section> <section class="right-column"> <h6>The Bad</h6> <pre class="sh_sourceCode sh_javascript"><code>
+ // If action is an object then...
+ if (typeof action === 'object') {
+    // If params is specified as function...
+    if (capri.typeOf(params) === 'function')
+       params = params();
+ ...
+ }
+ 		</code></pre> </section> <div class="clear"></div> </div> <p>We don't mind long comments provided that they are relevant!</p> <pre class="sh_sourceCode sh_javascript"><code>
+ // Long comments should wrap at around column 70ish to span multiple lines
+ // (unless there is only one word to wrap).
+ 
+ // This comment is one word over column 70 so doesn't need to be wrapped around.
+ </code></pre> <p>Classes and namespaces can be split into logical sections using the following:</p> <pre class="sh_sourceCode sh_javascript"><code>
+ /* Namespaces:
+ -------------------------------------------------------------------*/
+ 
+ /* Utility Functions:
+ -------------------------------------------------------------------*/
+ </code></pre> <h2>Curly Brackets</h2> <p>We only use curly brackets when they are either absolutely necesssary, or lead to cleaner code that is easier to read. Curly brackets are not necessary for simple <samp>if</samp> or <samp>for</samp> statements.</p> <pre class="sh_sourceCode sh_javascript"><code>
+ if (typeof action === 'object')
+    alert("It's an object!");
+ 
+ if (typeof action === 'object') {
+    alert("It's an object!");
+    accepted = true;
+ }
+ </code></pre> <h2>String Literals</h2> <p>There are two kinds of string literal; single quote and double quote. Where possible we prefer to use single quote literals, but it really doesn't matter. We use double quote literals for JSON encoded data.</p> <pre class="sh_sourceCode sh_javascript"><code>
+ // General string usage:
+ alert('Greetings!');
+ 
+ // Avoid nasty escape sequence on single quotes:
+ $('#output').html("You'll love our range of products!");
+ // Avoid nasty escape sequence on double quotes:
+ $('#output').html('&lt;div class="alert"&gt;Thank you for your purchase!&lt;/div&gt;');
+ 
+ // Some JSON encoded data
+ var jsonData = {
+    "title"     : "IT",
+    "author"    : "Stephen King",
+    "publisher" : "Viking"
+ };
+ </code></pre> <h2>Doclets</h2> <p>A doclet is a multi-line comment that preceeds with one extra star <samp>/** ... */</samp>. Doclets should contain a detailed explanation of the associated method, field, class, etc. These can be used to generate API documentation (like ours!).</p> <p>We use a custom documentation generator called <em>CapriDoc</em> which is written in JavaScript and executed from the command-line using V8. This project was inspired by the fantastic jsdoc project and will be released soon. There are several notable differences between jsdoc and CapriDoc:</p> <ul> <li>CapriDoc has a shorter vocabulary of tags to avoid confusion.</li> <li>CapriDoc is able to recognise the Capri way of defining classes and namespaces. This means that <samp>@namespace</samp>, <samp>@class</samp> and <samp>@lends</samp> tags do not need to be specified.</li> </ul> <p>Unfortunately tab characters cannot be used inside doclets because they do not format properly in web browsers. Instead 3 spaces should be used in place of each tab.</p> <p>We will be publishing a tag guide soon! Refer to existing Capri source for examples of CapriDoc usage.</p> <pre class="sh_sourceCode sh_javascript"><code>
+ /**
+  * Append query string to URI
+  *
+  * @example
+  * uri = capri.appendQueryString('http://example.com', 'a=b');
+  * // http://example.com?a=b
+  * uri = capri.appendQueryString('http://example.com?a=b', { "c": "d" });
+  * // http://example.com?a=b&c=d
+  *
+  * @param {string} uri URI
+  * @param {string|object} query Query arguments
+  *
+  * @returns {string} URI with additional query string
+  *
+  * @throws {CapriError} Thrown when parameter is invalid
+  */
+ capri.appendQueryString = function(uri, query) {
+    if (typeof uri !== 'string')
+       throw new CapriError("Expected string for 'uri'", 'invalid_param');
+ 
+    if (!!query) {
+       if (typeof query !== 'string')
+          query = capri.buildParamString(query);
+       if (query)
+          uri += (uri.indexOf('?') === -1 ? '?' : '&') + query;
+    }
+    return uri;
+ };
+ </code></pre> </section> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>
