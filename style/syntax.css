@@ -1,11 +1,11 @@
 pre.sh_sourceCode,
 pre.sh_sourceCode code {
-  background-color: #141414;
-  color: #ffffff;
-  font-size: 13.34px;
-  font-family: Monaco, Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", "Courier New", monospace;
-  font-weight: normal;
-  font-style: normal;
+	background-color: #141414;
+	color: #fff;
+	font-size: 13.34px;
+	font-family: Monaco, Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", "Courier New", monospace;
+	font-weight: normal;
+	font-style: normal;
 }
 pre.sh_sourceCode code {
 	display: block;
@@ -19,48 +19,51 @@ pre.sh_sourceCode code {
 }
 
 pre.sh_sourceCode .sh_keyword {
-  color: #5e82ab;
-  font-style: normal;
+	color: #5e82ab;
+	font-style: normal;
 }
 pre.sh_sourceCode .sh_function {
-  color: #c9a76e;
-  font-style: normal;
+	color: #c9a76e;
+	font-style: normal;
 }
 
-pre.sh_sourceCode .sh_type,
 pre.sh_sourceCode .sh_preproc,
 pre.sh_sourceCode .sh_url,
 pre.sh_sourceCode .sh_ip {
-  color: #5e82ab;
-  font-style: normal;
+	color: #5e82ab;
+	font-style: normal;
+}
+
+pre.sh_sourceCode .sh_type {
+	color: #ff9640;
 }
 
 pre.sh_sourceCode .sh_string,
 pre.sh_sourceCode .sh_regexp,
 pre.sh_sourceCode .sh_specialchar {
-  color: #8f9d6a;
-  font-style: normal;
+	color: #8f9d6a;
+	font-style: normal;
 }
 
 pre.sh_sourceCode .sh_comment {
-  color: #5e5b60;
-  font-style: italic;
+	color: #5e5b60;
+	font-style: italic;
 }
 
 pre.sh_sourceCode .sh_number {
-  color: #c47254;
-  font-style: normal;
+	color: #c47254;
+	font-style: normal;
 }
 
 pre.sh_sourceCode .sh_symbol,
 pre.sh_sourceCode .sh_cbracket {
-  color: #ffffff;
-  font-weight: bold;
-  font-style: normal;
+	color: #fff;
+	font-weight: bold;
+	font-style: normal;
 }
 
 pre.sh_sourceCode .sh_variable {
-  color: #c6623c;
-  font-weight: bold;
-  font-style: normal;
+	color: #c6623c;
+	font-weight: bold;
+	font-style: normal;
 }
