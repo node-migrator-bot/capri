@@ -197,43 +197,8 @@
 
 /* Parameters
 -------------------------------------------------------------------*/
-#doc-content .params {
-	border-spacing: 0;
-	border: 0;
-	border-collapse: collapse;
-}
-
 #doc-content .params .name {
 	color: #de6114;
-}
-
-#doc-content .params td,
-#doc-content .params th {
-	display: table-cell;
-	margin: 0px;
-	padding: 4px 6px;
-
-	border: 1px solid #ddd;
-
-	text-align: left;
-	vertical-align: top;
-}
-
-#doc-content .params thead tr {
-	background-color: #ddd;
-	font-weight: bold;
-}
-
-#doc-content .params .params thead tr {
-	background-color: #fff;
-	font-weight: bold;
-}
-
-#doc-content .params th {
-	border-right: 1px solid #aaa;
-}
-#doc-content .params thead .last {
-	border-right: 1px solid #ddd;
 }
 
 #doc-content .type-signature {

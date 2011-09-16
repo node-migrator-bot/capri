@@ -90,6 +90,30 @@ h6 {
 	font-style: italic;
 }
 
+table {
+	border-spacing: 0;
+	border: 0;
+	border-collapse: collapse;
+}
+table td,
+table th {
+	display: table-cell;
+	margin: 0px;
+	padding: 4px 6px;
+
+	border: 1px solid #ddd;
+
+	text-align: left;
+	vertical-align: top;
+}
+table thead tr {
+	background-color: #ddd;
+	font-weight: bold;
+}
+table th {
+	border-right: 1px solid #aaa;
+}
+
 .clear {
 	clear: both;
 }
@@ -264,7 +288,7 @@ section.content {
 #website-license {
 	position: absolute;
 	right: 0; bottom: 56px; left: 0;
-	padding: 8pt 0 8pt 2pt;
+	padding: 8pt 0 8pt 1pt;
 
 	font-size: 8pt;
 }
