@@ -133,10 +133,10 @@ figure figcaption {
 }
 
 samp {
-	padding: 2px;
+	padding: 1px 5px;
 
-	background-color: #fff5de;
-	color: #827558;
+	background-color: #ccc;
+	color: #444;
 
 	border-radius: 3pt 3pt;
 	-moz-border-radius: 3pt 3pt;
