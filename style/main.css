@@ -132,6 +132,17 @@ figure figcaption {
 	background-color: #ddd;
 }
 
+samp {
+	padding: 2px;
+
+	background-color: #fff5de;
+	color: #827558;
+
+	border-radius: 3pt 3pt;
+	-moz-border-radius: 3pt 3pt;
+	-webkit-border-radius: 3pt 3pt;
+}
+
 .clear {
 	clear: both;
 }
