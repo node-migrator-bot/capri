@@ -114,6 +114,24 @@ table th {
 	border-right: 1px solid #aaa;
 }
 
+figure {
+	margin: 0 auto;
+
+	border: solid 1px #bbb;
+}
+figure img {
+	display: block;
+	margin: 0 auto;
+}
+figure figcaption {
+	padding: 4pt;
+
+	text-align: center;
+	font-weight: bold;
+	font-size: 12pt;
+	background-color: #ddd;
+}
+
 .clear {
 	clear: both;
 }
