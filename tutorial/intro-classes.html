@@ -1,0 +1,162 @@
+ <!DOCTYPE html> <html> <head> <title>Introduction to classes &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Introduction to classes</h1> <p>A class is a blueprint that can be used to create objects. The functionality of a class is encapsulated within methods and data within fields. Objects can be created by instantiating the relevant class. Upon creation an object can initialise itseful when a constructor is defined.</p> <p>JavaScript provides prototype based object oriented programming which achieves the above. It is easy to define non-heirarchical class structures (i.e. without extends). Capri provides a mechanism that makes it easy to define classes using the classical approach that many developers have become accustomed to.</p> <p>A class has two scopes <em>instance</em> and <em>static</em>:</p> <dl> <dt>Instance Scope</dt> <dd>Methods and fields that are accessible from each object instance. Each object maintains its own state and thus the fields of one object may vary from another.</dd> <dt>Static Scope</dt> <dd>Methods and fields that are accessible via the class itself. The static scope is useful for defining data that must be shared across all objects. Some design patterns utilise the static scope; the <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton pattern</a> for example.</dd> </dl> <p>This tutorial explains the fundamentals of defining classes the Capri way. The <a href="extending-classes.html">next tutorial</a> demonstrates how to extend classes and benefit from polymorphism.</p> <h2>Define a class</h2> <p>Capri classes can be defined using the <a href="http://capri.rotorz.com/docs/global.html#$class"><code>$class</code></a> function. The first parameter identifies the name of the class and optionally the namespace that the class must be defined within. The second parameter can be used to define the per-instance methods and fields and the third parameter can be used to define static methods and fields.</p> <p>The following example define and use a greeting class:</p> <pre class="sh_sourceCode sh_javascript"><code>
+ $class('Greeting', {
+    greet: function(name) {
+       alert('Hey, ' + name + '!');
+    }
+ });
+ 
+ var greeting = new Greeting();
+ greeting.greet('Bob');
+ // displays alert box: "Hey, Bob!"
+ </code></pre> <p>A constructor could be added to the previous example to store name within a field:</p> <pre class="sh_sourceCode sh_javascript"><code>
+ $class('Greeting', {
+    __construct: function(name) {
+       // store name within instance field
+       this.name = name;
+    },
+    greet: function() {
+       // retrieve name from instance field with `this.name`
+       alert('Hey, ' + this.name + '!');
+    }
+ });
+ 
+ var greeting = new Greeting('Jessica');
+ greeting.greet();
+ // displays alert box: "Hey, Jessica!"
+ </code></pre> <h2>Define static members</h2> <p>The following example demonstrates how static members can be defined. Static members can be constructed using the optional <samp>__static</samp> constructor which is called automatically.</p> <pre class="sh_sourceCode sh_javascript"><code>
+ $class('Counter', {
+    // initialise counter to 0
+    value: 0,
+ 
+    increment: function(amount) {
+       // increment by 1 when amount is not specified
+       this.value += amount || 1;
+    }
+ },{//STATIC
+    __static: function() {
+       // initialise static data
+       Counter._instance = new Counter();
+    },
+    getInstance: function() {
+       return Counter._instance;
+    }
+ });
+ 
+ // get global counter and increment it
+ var counter = Counter.getInstance();
+ counter.increment();
+ </code></pre> <div class="info-box"><strong>Tip:</strong> Add a simple <samp>//STATIC</samp> comment at start of static namespace to clarify its meaning.</div> <p>Avoid using <samp>this</samp> within static context, static members should always be access via the class itself. Whilst <samp>this</samp> will appear to work in basic scenarios, it will break if class is extended.</p> <h2>A more advanced example</h2> <p><strong>DON'T PANIC :- </strong> Try not to worry if you don't know (or even care) what a vector is. The goal of this tutorial is not to scare you away with mathematical concepts but rather to demonstrate an example of how to define a class, its methods and its fields. The examples below use CapriDoc comments which can be used to generate API documentation. We plan to release the CapriDoc project under an open source license at a later time.</p> <p>If we were creating a simple game we might decide to create a class that represents the player. The class would be responsible for maintaining the players state, processing player specific functionality and rendering the player.</p> <p>The position and velocity of the player would probably be represented by a vector. Fields and methods are defined using the standard object notation that is used when defining objects. Comments have been added to document each aspect of the class, whilst this is not required for a working script, it is incredibly handy!</p> <div class="info-box"><strong>Note:</strong> For those interested, vectors have many uses including to identify position and velocity (speed). The angle of an object can be calculated from its velocity vector. There are many resources available on this subject both on the net and in print.</div> <pre class="sh_sourceCode sh_javascript"><code>
+ /**
+  * Two dimensional vector
+  */
+ $class('mygame.Vector', {
+    /**
+     * X component of vector
+     * @field {number}
+     */
+    x: 0,
+    /**
+     * Y component of vector
+     * @field {number}
+     */
+    y: 0,
+ 
+    /**
+     * Initialise vector instance
+     * @param {number} [x] Initial x component of vector
+     * @param {number} [y] Initial y component of vector
+     */
+    __construct: function(x, y) {
+       // constructor arguments are optional - update fields if specified
+       if (x !== undefined)
+          this.x = x;
+       if (y !== undefined)
+          this.y = y;
+    },
+ 
+    /**
+     * Calculate length of vector.
+     * @returns {number}
+     */
+    magnitude: function() {
+       // use Pythagoras' theorm to calculate length of vector
+       return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    },
+    /**
+     * Convert to unit vector.
+     * @returns {this} Supports chained calls!
+     */
+    normalise: function() {
+       var mag = this.magnitude();
+       this.x = this.x / mag;
+       this.y = this.y / mag;
+       return this;
+    }
+ });
+ </code></pre> <div class="info-box"><strong>Tip:</strong> It is a good idea to begin each class name with an upper case character to help differentiate between classes and namespaces.</div> <p>A constructor has been specified in the above example. Constructors are optional and are called automatically to initialise each object instance that is created.</p> <p>Please note how the constructor begins with two underscore characters <samp>__</samp>. This is consistent with the way that constructors are defined in PHP. Please avoid using the double underscore prefix on custom fields and methods because it is reserved for use by Capri.</p> <p>An instance of the vector class can be created and used as demonstrated in the following example:</p> <pre class="sh_sourceCode sh_javascript"><code>
+ // create new vector for velocity with (x=3 and y=4)
+ var velocity = new mygame.Vector(3, 4);
+ // calculate length of velocity vector
+ var length = velocity.magnitude();
+ // length becomes approximately 5.0 in this example
+ 
+ // convert to unit vector and calculate magnitude
+ // note: methods can be chained because `normalise` returns vector
+ var unitLength = velocity
+ 	.normalise()
+ 	.magnitude();
+ // unit length becomes approximately 1.0
+ </code></pre> <p>Another class could be defined to represent the player spaceship entity. The position and velocity of the spaceship could be represented by vectors (using the previous class). The spaceship would also have methods for processing movement and rendering to output.</p> <pre class="sh_sourceCode sh_javascript"><code>
+ /**
+  * Class that represents spaceship
+  */
+ $class('mygame.Spaceship', {
+    /**
+     * Position of spaceship in 2d space
+     * @field {mygame.Vector}
+     */
+    position: null,
+    /**
+     * Velocity of spaceship in 2d space
+     * @field {mygame.Vector}
+     */
+    velocity: null,
+    /**
+     * Percentage of shields remaining
+     * @field {number}
+     */
+    shields: 100,
+ 
+    /**
+     * Initialise player spaceship
+     */
+    __construct: function() {
+       // important - position and velocity must be initialised within constructor,
+       // otherwise all spaceship instances would share the same vector instances!
+ 
+       // initial position and velocity is zero
+       this.position = new mygame.Vector();
+       this.velocity = new mygame.Vector();
+    },
+ 
+    /**
+     * Process current frame
+     */
+    process: function() {
+       // move spaceship by its velocity
+       this.position.x += this.velocity.x;
+       this.position.y += this.velocity.y;
+    },
+ 
+    /**
+     * Render spaceship to screen
+     * @param {CanvasRenderingContext2D} dc Device context
+     */
+    render: function(dc) {
+       // draw square to represent spaceship
+       dc.fillStyle = 'white';
+       // (x, y) represents center of spaceship which is 10px by 10px
+       dc.fillRect(this.x - 5, this.y - 5, 10, 10);
+    }
+ });
+ </code></pre> <p>You might have noticed that the position and velocity vectors were not initialised when the fields were defined. If the vectors were initialised at that stage, all spaceship instances would share the same position and velocity vector instances.</p> <div class="info-box"><strong>Tip:</strong> Avoid initialising class instance fields with objects or arrays. Instead such fields should be initialised within the class constructor.</div> <h2>Summary</h2> <p>In this tutorial we have looked at what the purpose of classes and how they can be defined and used with the Capri library. Several examples were presented to demonstrate how methods and fields can be defined within both per instance and static scopes of a class.</p> <p><a href="extending-classes.html">Next tutorial: Extending classes and polymorphism</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div> </div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>
