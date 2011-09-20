@@ -10,6 +10,13 @@ footer .rotorz-home {
 	display: none !important;
 }
 
+html, body, .wrap {
+	height: auto;
+	min-height: auto;
+
+	background: transparent;
+}
+
 #page-header {
 	height: 115px;
 }
@@ -17,6 +24,11 @@ footer .rotorz-home {
 #doc-content {
 	float: none;
 	width: auto;
+}
+
+#page-footer, small {
+	position: static;
+	height: auto;
 }
 
 .narrow-page section.content {
