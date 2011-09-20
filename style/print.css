@@ -5,11 +5,25 @@
  * @author Lea Hayes <lea@rotorz.com>
  */
 
-nav {
+nav,
+footer .rotorz-home {
 	display: none;
 }
 
 #doc-content {
 	float: none;
 	width: auto;
+}
+
+.narrow-page section.content {
+	padding: 14pt;
+}
+
+.wrap {
+    width: auto;
+    min-height: auto;
+
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
 }
