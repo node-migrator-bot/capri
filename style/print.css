@@ -7,7 +7,11 @@
 
 nav,
 footer .rotorz-home {
-	display: none;
+	display: none !important;
+}
+
+#page-header {
+	height: 115px;
 }
 
 #doc-content {
