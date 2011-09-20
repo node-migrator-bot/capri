@@ -1,0 +1,15 @@
+/*!*
+ * Template: Capri
+ *
+ * @copyright (c) 2011 Rotorz Limited. All rights reserved.
+ * @author Lea Hayes <lea@rotorz.com>
+ */
+
+nav {
+	display: none;
+}
+
+#doc-content {
+	float: none;
+	width: auto;
+}
