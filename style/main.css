@@ -134,6 +134,7 @@ figure figcaption {
 
 samp {
 	padding: 1px 5px;
+	white-space: nowrap;
 
 	background-color: #eee;
 	color: #444;
@@ -176,7 +177,7 @@ samp {
 	width: 1022px;
 	min-height: 100%;
 
-	background: #fff;
+	background: #fff url('../img/sidebar-bk.jpg') repeat-y right top;
 
 	box-shadow: 0px 0px 18px 8px #000;
 	-webkit-box-shadow: 0px 0px 18px 8px #000;
@@ -306,9 +307,6 @@ samp {
 .content-wrap {
 	padding-bottom: 81px; /* Space for footer */
 }
-	.capri-api-docs .content-wrap {
-		background: url('../img/sidebar-bk.jpg') repeat-y right top;
-	}
 
 section.content {
 	padding: 14pt;
@@ -525,10 +523,4 @@ section.content {
 
 .narrow-page section.content {
 	padding: 14pt 160pt 14pt 52pt;
-}
-
-/* Download Options
--------------------------------------------------------------------*/
-.download-options li:before {
-	content: "-\0000a0"
 }

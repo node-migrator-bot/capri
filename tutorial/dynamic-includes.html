@@ -1,83 +1,119 @@
- <!DOCTYPE html> <html> <head> <title>Dynamically including scripts and styles &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_xml.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="stylesheet" type="text/css" media="print" href="http://capri.rotorz.com/style/print.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Dynamically including scripts and styles</h1> <p>Web applications often make extensive use of scripts and styles. Some developers choose to combine all scripts into a single file. This can amount to a large file that can slow a website down. Sure the size of the file makes a little different, but what about the parsing requirements within the JavaScript processor. This is especially an issue for mobile devices.</p> <p>The additional overhead occurs during page load. This means that a page might not be useable until all scripts have finished loading and executing which can be enough to deter even the most patient of users. The situation can be improved by dynamically loading the script(s) as soon as the DOM has finished loading.</p> <p>Scripts can also be broken into separate modules that:</p> <ul> <li>are easier to maintain and test</li> <li>can be loaded when (and if) they are needed</li> </ul> <div class="info-box"><strong>Warning:</strong> Capri can only dynamically include scripts that are from the same domain. We are interested in removing this limitation so ideas are welcome!</div> <h2>How do dynamic includes work?</h2> <p>By default a script is only included and processed once. So re-including the same script over and over will do nothing. It is possible to force a script to be re-included. This is useful for scripts that perform a process (as opposed to defined processes with functions and classes).</p> <p>Callbacks can be used to perform processing once a specific include has been executed. This allows custom functionality that requires the included script to be executed.</p> <p>Includes are processed in the same order that the are specified. Included scripts may also include scripts which forms an include hierarchy. Nested includes are processed in order to ensure that dependencies are available when needed. The following diagram illustrates the order that includes are processed and when callbacks are invoked.</p> <figure> <br /> <img src="img/includes.jpg" alt="illustration of include hierarchy" /> <br /> <figcaption>Illustration of include hierarchy and order of callbacks</figcaption> </figure> <p></p> <h2>Load scripts once DOM has loaded</h2> <p>Scripts can be included using <samp><a href="http://capri.rotorz.com/docs/global.html#$include">$include</a></samp> at startup once the Capri library has been loaded. The following example demonstrates how this can be achieved:</p> <pre class="sh_sourceCode sh_xml"><code>
- &lt;!DOCTYPE html&gt;
- &lt;html&gt;
- &lt;head&gt;
-    &lt;title&gt;Dynamic include example #1&lt;/title&gt;
-    &lt;!-- essential libraries --&gt;
-    &lt;script src=&quot;myapp/js/lib/jquery.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;myapp/js/lib/jquery.capri.min.js&quot;&gt;&lt;/script&gt;
-    &lt;!-- included once page has finished loading --&gt;
-    &lt;script&gt;
-       $include('http://example.com/myapp/js/widget.js');
-       $include('http://example.com/myapp/js/app.js');
-    &lt;/script&gt;
- &lt;/head&gt;
- &lt;body&gt;
-    &lt;div id=&quot;appframe&quot;&gt;&lt;/div&gt;
- &lt;/body&gt;
- &lt;/html&gt;
- </code></pre> <p>You will notice that the full URI of each JavaScript must be specified for include. This may be fine for small applications, but this can be a maintenance nightmare if the same scripts are to be used in multiple applications. The base URI of your web application can be registered with the Capri document manager. A tilde can then be used to reference the base URI of you application:</p> <pre class="sh_sourceCode sh_xml"><code>
- &lt;!DOCTYPE html&gt;
- &lt;html&gt;
- &lt;head&gt;
-    &lt;title&gt;Dynamic include example #2&lt;/title&gt;
-    &lt;!-- essential libraries --&gt;
-    &lt;script src=&quot;myapp/js/lib/jquery.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;myapp/js/lib/jquery.capri.min.js&quot;&gt;&lt;/script&gt;
-    &lt;!-- included once page has finished loading --&gt;
-    &lt;script&gt;
-       // register base application URI
-       capri.DocumentManager.setBaseUri('http://example.com/myapp');
- 
-       // include scripts relative to base URI
-       $include('~/js/widget.js');
-       $include('~/js/app.js');
-    &lt;/script&gt;
- &lt;/head&gt;
- &lt;body&gt;
-    &lt;div id=&quot;appframe&quot;&gt;&lt;/div&gt;
- &lt;/body&gt;
- &lt;/html&gt;
- </code></pre> <p>jQuery provides a useful function to register logic that must be executed as soon as the DOM loaded. Capri uses this to process its initial includes. Capri provides a similar function <samp><a href="http://capri.rotorz.com/docs/global.html#$startup">$startup</a></samp> that registers startup logic that must be executed as soon as all includes have loaded.</p> <p>The following example demonstrates how you might initialise an application:</p> <pre class="sh_sourceCode sh_xml"><code>
- &lt;!DOCTYPE html&gt;
- &lt;html&gt;
- &lt;head&gt;
-    &lt;title&gt;Dynamic include example #3&lt;/title&gt;
-    &lt;!-- essential libraries --&gt;
-    &lt;script src=&quot;myapp/js/lib/jquery.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;myapp/js/lib/jquery.capri.min.js&quot;&gt;&lt;/script&gt;
-    &lt;!-- included once page has finished loading --&gt;
-    &lt;script&gt;
-       // register base application URI
-       capri.DocumentManager.setBaseUri('http://example.com/myapp');
- 
-       // include scripts relative to base URI
-       $include('~/js/widget.js');
-       $include('~/js/app.js');
- 
-       // initialise application
-       $startup(function() {
-          var app = myapp.App.getInstance();
-          app.init();
-       });
-    &lt;/script&gt;
- &lt;/head&gt;
- &lt;body&gt;
-    &lt;div id=&quot;appframe&quot;&gt;&lt;/div&gt;
- &lt;/body&gt;
- &lt;/html&gt;
- </code></pre> <h2>Load scripts and styles on demand</h2> <p>The above examples demonstrate how to delay load scripts upon loading page. It is also possible to include scripts and styles on demand. This is achieved in much the same way except the include queue must be processed manually with <samp><a href="http://capri.rotorz.com/docs/global.html#$include,process">$include.process</a></samp>.</p> <p>A callback is used in the following example to update the user profile once the profile script has been included.</p> <pre class="sh_sourceCode sh_javascript"><code>
- $('#save-profile').click(function() {
-    // ensure that required scripts and styles are included
-    $include('~/css/profile.css');
-    $include('~/js/profile.js', function() {
-       var profile = myapp.Profile.getInstance();
-       profile.setName($('#profile-name').val());
-       profile.setEmail($('#profile-email').val());
-       profile.saveChanges();
-    });
- 
-    // process all queued includes
-    $include.process();
- });
- </code></pre> <h2>Summary</h2> <p>This tutorial has explained how dynamic includes can be used to improve performance and the maintainability of a web application. Scripts can include one another which leads to a heirarchy. Dynamic includes must be manually processed once initial batch of includes have been processed during page load. The <samp>$startup</samp> function executes callbacks once all initial includes have been loaded and executed.</p> <p><a href="creating-a-widget.html">Next tutorial: Creating a widget</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div> </div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>
+ <!DOCTYPE html> <html> <head> <meta charset="UTF-8" /> <title>Dynamically including scripts and styles &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_xml.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="stylesheet" type="text/css" media="print" href="http://capri.rotorz.com/style/print.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> <li><a href="http://capri.rotorz.com/how-to-build.html">How to Build</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Dynamically including scripts and styles</h1> <p>Web applications often make extensive use of scripts and styles. Some developers choose to combine
+all scripts into a single file. This can amount to a large file that can slow a website down. Sure
+the size of the file makes a little different, but what about the parsing requirements within the
+JavaScript processor. This is especially an issue for mobile devices.</p> <p>The additional overhead occurs during page load. This means that a page might not be useable until
+all scripts have finished loading and executing which can be enough to deter even the most patient of
+users. The situation can be improved by dynamically loading the script(s) as soon as the DOM has
+finished loading.</p> <p>Scripts can also be broken into separate modules that:</p>
+<ul> <li>are easier to maintain and test</li> <li>can be loaded when (and if) they are needed</li>
+</ul> <div class="info-box"><strong>Warning:</strong> Capri can only dynamically include scripts that are
+from the same domain. We are interested in removing this limitation so ideas are welcome!</div> <h2>How do dynamic includes work?</h2>
+<p>By default a script is only included and processed once. So re-including the same script over and
+over will do nothing. It is possible to force a script to be re-included. This is useful for scripts
+that perform a process (as opposed to defined processes with functions and classes).</p> <p>Callbacks can be used to perform processing once a specific include has been executed. This allows
+custom functionality that requires the included script to be executed.</p> <p>Includes are processed in the same order that the are specified. Included scripts may also include
+scripts which forms an include hierarchy. Nested includes are processed in order to ensure that
+dependencies are available when needed. The following diagram illustrates the order that includes
+are processed and when callbacks are invoked.</p> <figure> <br /> <img src="img/includes.jpg" alt="illustration of include hierarchy" /> <br /> <figcaption>Illustration of include hierarchy and order of callbacks</figcaption>
+</figure> <p></p> <h2>Load scripts once DOM has loaded</h2>
+<p>Scripts can be included using <samp><a href="http://capri.rotorz.com/docs/global.html#$include">$include</a></samp>
+at startup once the Capri library has been loaded. The following example demonstrates how this can
+be achieved:</p> <pre class="sh_sourceCode sh_xml"><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;Dynamic include example #1&lt;/title&gt;
+   &lt;!-- essential libraries --&gt;
+   &lt;script src=&quot;myapp/js/lib/jquery.min.js&quot;&gt;&lt;/script&gt;
+   &lt;script src=&quot;myapp/js/lib/jquery.capri.min.js&quot;&gt;&lt;/script&gt;
+   &lt;!-- included once page has finished loading --&gt;
+   &lt;script&gt;
+      $include('http://example.com/myapp/js/widget.js');
+      $include('http://example.com/myapp/js/app.js');
+   &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;div id=&quot;appframe&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <p>You will notice that the full URI of each JavaScript must be specified for include. This may be
+fine for small applications, but this can be a maintenance nightmare if the same scripts are to be
+used in multiple applications. The base URI of your web application can be registered with the Capri
+document manager. A tilde can then be used to reference the base URI of you application:</p> <pre class="sh_sourceCode sh_xml"><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;Dynamic include example #2&lt;/title&gt;
+   &lt;!-- essential libraries --&gt;
+   &lt;script src=&quot;myapp/js/lib/jquery.min.js&quot;&gt;&lt;/script&gt;
+   &lt;script src=&quot;myapp/js/lib/jquery.capri.min.js&quot;&gt;&lt;/script&gt;
+   &lt;!-- included once page has finished loading --&gt;
+   &lt;script&gt;
+      // register base application URI
+      capri.DocumentManager.setBaseUri('http://example.com/myapp');
+
+      // include scripts relative to base URI
+      $include('~/js/widget.js');
+      $include('~/js/app.js');
+   &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;div id=&quot;appframe&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <p>jQuery provides a useful function to register logic that must be executed as soon as the DOM
+loaded. Capri uses this to process its initial includes. Capri provides a similar function
+<samp><a href="http://capri.rotorz.com/docs/global.html#$startup">$startup</a></samp> that registers
+startup logic that must be executed as soon as all includes have loaded.</p> <p>The following example demonstrates how you might initialise an application:</p> <pre class="sh_sourceCode sh_xml"><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;Dynamic include example #3&lt;/title&gt;
+   &lt;!-- essential libraries --&gt;
+   &lt;script src=&quot;myapp/js/lib/jquery.min.js&quot;&gt;&lt;/script&gt;
+   &lt;script src=&quot;myapp/js/lib/jquery.capri.min.js&quot;&gt;&lt;/script&gt;
+   &lt;!-- included once page has finished loading --&gt;
+   &lt;script&gt;
+      // register base application URI
+      capri.DocumentManager.setBaseUri('http://example.com/myapp');
+
+      // include scripts relative to base URI
+      $include('~/js/widget.js');
+      $include('~/js/app.js');
+
+      // initialise application
+      $startup(function() {
+         var app = myapp.App.getInstance();
+         app.init();
+      });
+   &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;div id=&quot;appframe&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <h2>Load scripts and styles on demand</h2>
+<p>The above examples demonstrate how to delay load scripts upon loading page. It is also possible
+to include scripts and styles on demand. This is achieved in much the same way except the include
+queue must be processed manually with <samp><a href="http://capri.rotorz.com/docs/global.html#$include,process">$include.process</a></samp>.</p> <p>A callback is used in the following example to update the user profile once the profile script
+has been included.</p> <pre class="sh_sourceCode sh_javascript"><code>
+$('#save-profile').click(function() {
+   // ensure that required scripts and styles are included
+   $include('~/css/profile.css');
+   $include('~/js/profile.js', function() {
+      var profile = myapp.Profile.getInstance();
+      profile.setName($('#profile-name').val());
+      profile.setEmail($('#profile-email').val());
+      profile.saveChanges();
+   });
+
+   // process all queued includes
+   $include.process();
+});
+</code></pre> <h2>Summary</h2>
+<p>This tutorial has explained how dynamic includes can be used to improve performance and the
+maintainability of a web application. Scripts can include one another which leads to a heirarchy.
+Dynamic includes must be manually processed once initial batch of includes have been processed
+during page load. The <samp>$startup</samp> function executes callbacks once all initial includes
+have been loaded and executed.</p> <p><a href="creating-a-widget.html">Next tutorial: Creating a widget</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div>
+</div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>

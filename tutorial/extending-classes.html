@@ -1,188 +1,236 @@
- <!DOCTYPE html> <html> <head> <title>Extending classes and polymorphism &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="stylesheet" type="text/css" media="print" href="http://capri.rotorz.com/style/print.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Extending classes and polymorphism</h1> <p>There are many situations where multiple classes will share logic with one another. The common logic can be placed into a separate class that can then be inherited by other classes. Specialised classes can override inherited logic when necessary. Overridden methods can be replaced entirely, or they can be encapsulated within additional custom logic.</p> <p>All classes that are defined using <samp><a href="http://capri.rotorz.com/docs/global.html#$class">$class</a></samp> automatically inherit <samp><a href="http://capri.rotorz.com/docs/capri-object.html">capri.Object</a></samp> and the reflection capabilities that it provides. This is explained in further detail in the next tutorial.</p> <h2>Extending a class</h2> <p>The following example demonstrates a basic class hierarchy for animals. Dogs and eagles are both animals, but they have their own unique characteristics that need to be defined separately. Common functionality can be implemented within the base class <samp>Animal</samp> and then specialised functionality within <samp>Dog</samp> and <samp>Eagle</samp>. The following diagram illustrates the hierarchy of such classes.</p> <figure> <img src="img/animal-uml.png" alt="hierarchy of animal classes" /> <figcaption>UML class diagram of animals</figcaption> </figure> <p>The base class <samp>Animal</samp> is defined in the same way as usual. In this example each animal is initialised with its name. The constructor in animal is called automatically because neither <samp>Dog</samp> nor <samp>Eagle</samp> define a constructor.</p> <pre class="sh_sourceCode sh_javascript"><code>
- $class('Animal', {
-    __construct: function(name) {
-       this._name = name;
-    },
-    getName: function() {
-       return this._name;
-    }
- });
- </code></pre> <p>The classes for dog and eagle each extend the animal class that was defined above. Inheritance occurs when a class name (or reference) is specified as the second argument to <samp>$class</samp>.</p> <pre class="sh_sourceCode sh_javascript"><code>
- $class('Dog', 'Animal', {
-    legs: 4,
- 
-    run: function() { ... }
- });
- 
- $class('Eagle', 'Animal', {
-    legs: 2,
- 
-    fly: function() { ... },
-    swoop: function() { ... }
- });
- </code></pre> <h2>Calling super methods</h2> <p>It is often useful to call upon a method from the super class of an object. One common scenario is that a custom constructor must be defined for a derivative class. When a constructor is defined, the original is overridden and thus doesn't get called automatically. The original constructor can be called manually when needed:</p> <pre class="sh_sourceCode sh_javascript"><code>
- $class('Wolf', 'Dog', {
-    __construct: function(name) {
-       // call constructor from super class `Dog`
-       this.callSuper(Dog, '__construct', name);
- 
-       // initialise array for other members of pack
-       // note: array cannot be initialised like a basic data type because
-       //       all wolves would share the same array instance!
-       this.pack = [];
-    }
- });
- </code></pre> <h2>Extending a class with static members</h2> <p>Static methods are inherited when extending a class, however static fields are not. This doesn't pose any limitations because static fields are always accessed using the appropriate class reference. For example:</p> <pre class="sh_sourceCode sh_javascript"><code>
- $class('A', {
- 
-    // ...
- 
- },{//STATIC
-    foo: 27,
-    bar: function() {
-       return A.foo * 2;
-    }
- });
- 
- $class('B', 'A', {
- 
-    // ...
- 
- },{//STATIC
-    baz: function() {
-       return 'From inherited class: ' + B.bar();
-    }
- });
- 
- myvar = A.foo;
- // myvar becomes 27
- myvar = B.foo;
- // myvar becomes undefined - data is not inherited
- 
- myvar = A.bar();
- // myvar becomes 54
- myvar = B.bar();
- // myvar becomes 54 - access data through inherited method
- 
- myvar = B.baz();
- // myvar becomes "From inherited class: 54"
- </code></pre> <h2>A more advanced example (continued)</h2> <p>The following example continues from the previous tutorial. In a video game each interactive object is often referred to as an entity. So the spaceship would be an entity as would a rock. Logic that is common to both spaceships and rocks would be implemented within the entity class. This may include distance calculation and basic movement processing.</p> <figure> <img src="img/entity-uml.png" alt="various game classes" /> <figcaption>UML class diagram of various game classes</figcaption> </figure> <p>The base entity class can be defined as usual. The <samp>@abstract</samp> tag in the comment indicates that the class is to be documented as an abstract class.</p> <p>Each entity has a basic radius field that can be used for circle based collision detection.</p> <pre class="sh_sourceCode sh_javascript"><code>
- /**
-  * Class that defines foundation for an entity
-  * @abstract
-  */
- $class('mygame.Entity', {
-     /**
-      * Position of entity in 2d space
-      * @field {mygame.Vector}
-      */
-     position: null,
-     /**
-      * Velocity of entity in 2d space
-      * @field {mygame.Vector}
-      */
-     velocity: null,
-     /**
-      * Radius of entity
-      * @field {number}
-      * @default 5 world units
-      */
-     radius: 5,
-  
-     /**
-      * Initialise entity
-      */
-     __construct: function() {
-        // initial position and velocity is zero
-        this.position = new mygame.Vector();
-        this.velocity = new mygame.Vector();
-     },
-  
+ <!DOCTYPE html> <html> <head> <meta charset="UTF-8" /> <title>Extending classes and polymorphism &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="stylesheet" type="text/css" media="print" href="http://capri.rotorz.com/style/print.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> <li><a href="http://capri.rotorz.com/how-to-build.html">How to Build</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Extending classes and polymorphism</h1> <p>There are many situations where multiple classes will share logic with one another. The common
+logic can be placed into a separate class that can then be inherited by other classes. Specialised
+classes can override inherited logic when necessary. Overridden methods can be replaced entirely, or
+they can be encapsulated within additional custom logic.</p> <p>All classes that are defined using <samp><a href="http://capri.rotorz.com/docs/global.html#$class">$class</a></samp>
+automatically inherit <samp><a href="http://capri.rotorz.com/docs/capri-object.html">capri.Object</a></samp>
+and the reflection capabilities that it provides. This is explained in further detail in the next
+tutorial.</p> <h2>Extending a class</h2>
+<p>The following example demonstrates a basic class hierarchy for animals. Dogs and eagles are both
+animals, but they have their own unique characteristics that need to be defined separately. Common
+functionality can be implemented within the base class <samp>Animal</samp> and then specialised
+functionality within <samp>Dog</samp> and <samp>Eagle</samp>. The following diagram illustrates the
+hierarchy of such classes.</p>
+<figure> <img src="img/animal-uml.png" alt="hierarchy of animal classes" /> <figcaption>UML class diagram of animals</figcaption>
+</figure> <p>The base class <samp>Animal</samp> is defined in the same way as usual. In this example each
+animal is initialised with its name. The constructor in animal is called automatically because
+neither <samp>Dog</samp> nor <samp>Eagle</samp> define a constructor.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+$class('Animal', {
+   __construct: function(name) {
+      this._name = name;
+   },
+   getName: function() {
+      return this._name;
+   }
+});
+</code></pre> <p>The classes for dog and eagle each extend the animal class that was defined above. Inheritance
+occurs when a class name (or reference) is specified as the second argument to <samp>$class</samp>.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+$class('Dog', 'Animal', {
+   legs: 4,
+
+   run: function() { ... }
+});
+
+$class('Eagle', 'Animal', {
+   legs: 2,
+
+   fly: function() { ... },
+   swoop: function() { ... }
+});
+</code></pre> <h2>Calling super methods</h2>
+<p>It is often useful to call upon a method from the super class of an object. One common scenario
+is that a custom constructor must be defined for a derivative class. When a constructor is defined,
+the original is overridden and thus doesn't get called automatically. The original constructor can
+be called manually when needed:</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+$class('Wolf', 'Dog', {
+   __construct: function(name) {
+      // call constructor from super class `Dog`
+      this.callSuper(Dog, '__construct', name);
+
+      // initialise array for other members of pack
+      // note: array cannot be initialised like a basic data type because
+      //       all wolves would share the same array instance!
+      this.pack = [];
+   }
+});
+</code></pre> <h2>Extending a class with static members</h2>
+<p>Static methods are inherited when extending a class, however static fields are not. This doesn't
+pose any limitations because static fields are always accessed using the appropriate class reference.
+For example:</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+$class('A', {
+
+   // ...
+
+},{//STATIC
+   foo: 27,
+   bar: function() {
+      return A.foo * 2;
+   }
+});
+
+$class('B', 'A', {
+
+   // ...
+
+},{//STATIC
+   baz: function() {
+      return 'From inherited class: ' + B.bar();
+   }
+});
+
+myvar = A.foo;
+// myvar becomes 27
+myvar = B.foo;
+// myvar becomes undefined - data is not inherited
+
+myvar = A.bar();
+// myvar becomes 54
+myvar = B.bar();
+// myvar becomes 54 - access data through inherited method
+
+myvar = B.baz();
+// myvar becomes "From inherited class: 54"
+</code></pre> <h2>A more advanced example (continued)</h2>
+<p>The following example continues from the previous tutorial. In a video game each interactive
+object is often referred to as an entity. So the spaceship would be an entity as would a rock. Logic
+that is common to both spaceships and rocks would be implemented within the entity class. This may
+include distance calculation and basic movement processing.</p> <figure> <img src="img/entity-uml.png" alt="various game classes" /> <figcaption>UML class diagram of various game classes</figcaption>
+</figure> <p>The base entity class can be defined as usual. The <samp>@abstract</samp> tag in the comment
+indicates that the class is to be documented as an abstract class.</p> <p>Each entity has a basic radius field that can be used for circle based collision detection.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+/**
+ * Class that defines foundation for an entity
+ * @abstract
+ */
+$class('mygame.Entity', {
     /**
-     * Render entity to screen
-     * @param {CanvasRenderingContext2D} dc Device context
+     * Position of entity in 2d space
+     * @field {mygame.Vector}
      */
-    render: function(dc) {},
+    position: null,
     /**
-     * Process current frame
+     * Velocity of entity in 2d space
+     * @field {mygame.Vector}
      */
-    process: function() {
-       // move entity by its velocity
-       this.position.x += this.velocity.x;
-       this.position.y += this.velocity.y;
-    },
- 
+    velocity: null,
     /**
-     * Calculate distance to another entity (from mid-points)
-     * @param {mygame.Entity} entity Another entity
-     * @returns {number} Distance in world units
-     */
-    distanceTo: function(entity) {
-       return Math.sqrt(
-          Math.pow(entity.position.x - this.position.x, 2) +
-          Math.pow(entity.position.y - this.position.y, 2)
-       );
-    },
-    /**
-     * Calculate distance between two entities
-     *
-     * Negative value means that entities overlap
-     * Zero value means that entities touch
-     * Positive value means that entities are separate
-     *
-     * @param {mygame.Entity} entity Another entity
-     * @returns {number} Distance in world units
-     */
-    distanceBetween: function(entity) {
-       return this.distanceTo(entity) - this.radius - entity.radius;
-    }
- });
- </code></pre> <p>Much of the original spaceship functionality has been moved into the entity class because it is common to all entities in this make believe game. The <samp>render</samp> method has been overridden with one that actually renders the ship to the screen.</p> <pre class="sh_sourceCode sh_javascript"><code>
- /**
-  * Class that represents spaceship
-  */
- $class('mygame.Spaceship', 'mygame.Entity', {
-    /**
-     * Percentage of shields remaining
+     * Radius of entity
      * @field {number}
+     * @default 5 world units
      */
-    shields: 100,
+    radius: 5,
  
-    render: function(dc) {
-        // draw square to represent spaceship
-        dc.fillStyle = 'white';
-        // (x, y) represents center of spaceship which is 10px by 10px
-        dc.fillRect(this.x - 5, this.y - 5, 10, 10);
-    }
- });
- </code></pre> <p>The rock entity defines its own constructor which specifies a different radius for the rock. The usual entity constructor is called after the radius is adjusted. The rock also defines its own render method that uses the rocks randomly generated size.</p> <pre class="sh_sourceCode sh_javascript"><code>
- /**
-  * Class that represents rock
-  */
- $class('mygame.Rock', 'mygame.Entity', {
     /**
-     * Initialise rock
+     * Initialise entity
      */
-    __construct() {
-       // use random radius for randomly sized rock that is at least the
-       // size of a typical entity (5 in this example)
-       this.radius += Math.random() * 21;
-       // initialise entity class
-       this.callSuper(mygame.Entity, '__construct');
+    __construct: function() {
+       // initial position and velocity is zero
+       this.position = new mygame.Vector();
+       this.velocity = new mygame.Vector();
     },
-    render: function(dc) {
-        var r = this.radius;
  
-        // draw square to represent rock
-        dc.fillStyle = 'silver';
-        // (x, y) represents center of randomly sized rock
-        dc.fillRect(this.x - r, this.y - r, r * 2, r * 2);
-    }
- });
- </code></pre> <p>With the above it becomes easy to compute the distance between a spaceship and a rock because all entities inherit this functionality:</p> <pre class="sh_sourceCode sh_javascript"><code>
- // detect collision between ship and rock
- if (ship.distanceBetween(rock) <= 0) {
-    // inflict damage upon ship!
-    ship.shields -= 10;
- }
- </code></pre> <h2>Summary</h2> <p>This tutorial has demonstrated how to define classes that extend other classes. A derived class can provide its own methods that override those inherited. It is also possible to call upon methods from the inherited base class. This essentially allows the developer to add functionality before and after the inherited functionality. We then looked at a slightly more advanced example of how classes can be applied.</p> <p><a href="reflection.html">Next tutorial: Reflection with classes</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div> </div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>
+   /**
+    * Render entity to screen
+    * @param {CanvasRenderingContext2D} dc Device context
+    */
+   render: function(dc) {},
+   /**
+    * Process current frame
+    */
+   process: function() {
+      // move entity by its velocity
+      this.position.x += this.velocity.x;
+      this.position.y += this.velocity.y;
+   },
+
+   /**
+    * Calculate distance to another entity (from mid-points)
+    * @param {mygame.Entity} entity Another entity
+    * @returns {number} Distance in world units
+    */
+   distanceTo: function(entity) {
+      return Math.sqrt(
+         Math.pow(entity.position.x - this.position.x, 2) +
+         Math.pow(entity.position.y - this.position.y, 2)
+      );
+   },
+   /**
+    * Calculate distance between two entities
+    *
+    * Negative value means that entities overlap
+    * Zero value means that entities touch
+    * Positive value means that entities are separate
+    *
+    * @param {mygame.Entity} entity Another entity
+    * @returns {number} Distance in world units
+    */
+   distanceBetween: function(entity) {
+      return this.distanceTo(entity) - this.radius - entity.radius;
+   }
+});
+</code></pre> <p>Much of the original spaceship functionality has been moved into the entity class because it is
+common to all entities in this make believe game. The <samp>render</samp> method has been overridden
+with one that actually renders the ship to the screen.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+/**
+ * Class that represents spaceship
+ */
+$class('mygame.Spaceship', 'mygame.Entity', {
+   /**
+    * Percentage of shields remaining
+    * @field {number}
+    */
+   shields: 100,
+
+   render: function(dc) {
+       // draw square to represent spaceship
+       dc.fillStyle = 'white';
+       // (x, y) represents center of spaceship which is 10px by 10px
+       dc.fillRect(this.x - 5, this.y - 5, 10, 10);
+   }
+});
+</code></pre> <p>The rock entity defines its own constructor which specifies a different radius for the rock. The
+usual entity constructor is called after the radius is adjusted. The rock also defines its own
+render method that uses the rocks randomly generated size.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+/**
+ * Class that represents rock
+ */
+$class('mygame.Rock', 'mygame.Entity', {
+   /**
+    * Initialise rock
+    */
+   __construct() {
+      // use random radius for randomly sized rock that is at least the
+      // size of a typical entity (5 in this example)
+      this.radius += Math.random() * 21;
+      // initialise entity class
+      this.callSuper(mygame.Entity, '__construct');
+   },
+   render: function(dc) {
+       var r = this.radius;
+
+       // draw square to represent rock
+       dc.fillStyle = 'silver';
+       // (x, y) represents center of randomly sized rock
+       dc.fillRect(this.x - r, this.y - r, r * 2, r * 2);
+   }
+});
+</code></pre> <p>With the above it becomes easy to compute the distance between a spaceship and a rock because
+all entities inherit this functionality:</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+// detect collision between ship and rock
+if (ship.distanceBetween(rock) <= 0) {
+   // inflict damage upon ship!
+   ship.shields -= 10;
+}
+</code></pre> <h2>Summary</h2>
+<p>This tutorial has demonstrated how to define classes that extend other classes. A derived class
+can provide its own methods that override those inherited. It is also possible to call upon methods
+from the inherited base class. This essentially allows the developer to add functionality before
+and after the inherited functionality. We then looked at a slightly more advanced example of how
+classes can be applied.</p> <p><a href="reflection.html">Next tutorial: Reflection with classes</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div>
+</div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>

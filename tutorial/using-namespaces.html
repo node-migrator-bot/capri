@@ -1,32 +1,67 @@
- <!DOCTYPE html> <html> <head> <title>Using namespaces &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="stylesheet" type="text/css" media="print" href="http://capri.rotorz.com/style/print.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Using namespaces</h1> <p>Conflicts can occur when developing web applications that make extensive use of JavaScript. These are usually caused by naming conflicts which causes existing functionality to be overwritten. For example, if <samp>Math</samp> were to be defined in custom scripts then all scripts that are dependant would break. This can be avoided by defining custom functionality within a unique custom namespace.</p> <p>This is nothing new to JavaScript, however Capri provides a simple mechanism that makes defining, extending and using namespaces easier. For best results you should define a root most vendor specific namespace ("my" for purposes of this tutorial). Math functionality could be placed into its own namespace <samp>my.math</samp>.</p> <div class="info-box"><strong>Tip:</strong> We tend to use lower case identifiers for our namespaces so that class names are emphasised. With this convention <samp>my.Test</samp> clearly refers to a class whereas <samp>my.test</samp> could refer to a namespace, function or data member.</div> <h2>Define namespace</h2> <p>The Capri function <samp><a href="http://capri.rotorz.com/docs/global.html#$namespace">$namespace</a></samp> can be used to define our namespace. The first parameter identifies the namespace that we would like to define and the second parameter allows us to specify the functions and fields that need to be added to the namespace.</p> <p>The name of the namespace must be specifed using a string because the namespace does not exist yet. Attempting to specify as object would otherwise cause an error. A root namespace called <samp>my</samp> would be specified using <samp>"my"</samp>. A namespace inside <samp>my</samp> called <samp>math</samp> would be specified using <samp>"my.math"</samp>.</p> <p>Namespace members can then be defined within curly brackets using the same syntax that is used to define an object. The following source demonstrates the definition of our math namespace.</p> <pre class="sh_sourceCode sh_javascript"><code>
- // namespace identifier is specified as string because it has not yet been defined
- $namespace('my.math', {
-    // function that sums array of numbers
-    sum: function(numbers) {
-       var r = 0;
-       for (var i = 0; i < numbers.length; ++i)
-          r += numbers[i];
-       return r;
-    }
- });
- </code></pre> <p>The summation function can then be used by referencing the namespace:</p> <pre class="sh_sourceCode sh_javascript"><code>
- var total = my.math.sum([ 1, 2, 3, 4, 5 ]);
- // outcome: 15
- </code></pre> <h2>Extend an existing namespace</h2> <p>Functionality can be added to an existing namespace using exactly the same technique. Existing functionality can be replaced simply by redefining it. The following example demonstrates how the function <samp>mean</samp> could be added:</p> <pre class="sh_sourceCode sh_javascript"><code>
- $namespace('my.math', {
-    mean: function(numbers) {
-       // note: this refers to my.math
-       return this.sum(numbers) / 2;
-    }
- });
- </code></pre> <div class="info-box"><strong>Note:</strong> An existing namespace can be specified using a string literal or by reference. The latter must only be done when the namespace has already been defined to avoid errors.</div> <h2>Using a namespace</h2> <p>Extensive use of a deeply nested namespace can be simplified by defining a temporary alias. This saves a little typing and may execute a little faster. Namespace can be specified by name or object.</p> <p>The custom alias is defined by the first argument of the callback function. Any valid JavaScript identifier can be used (name or abbreviation) for the alias. The alias can then be used to access the namespace instead!</p> <pre class="sh_sourceCode sh_javascript"><code>
- $namespace.use('my.math', function(math) {
-    var average = math.mean([ 1, 2, 3, 4, 5 ]);
-    // outcome: 3
- });
- </code></pre> <h2>Using multiple namespaces</h2> <p>Aliases can be defined for multiple namespaces by providing an array of namespaces. Each callback argument defines an alias which must be listed in the same order as the namespaces.</p> <pre class="sh_sourceCode sh_javascript"><code>
- $namespace.use([ jQuery, my.math ], function($, math) {
-    // replace text in "average" element with new average
-    $('#average').text(math.mean([ 1, 2, 3, 4, 5 ]));
- });
- </code></pre> <h2>Summary</h2> <p>In this tutorial we have looked at what the purpose of namespaces is and how they can be defined and used with the Capri library.</p> <p><a href="intro-classes.html">Next tutorial: Introduction to classes</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div> </div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>
+ <!DOCTYPE html> <html> <head> <meta charset="UTF-8" /> <title>Using namespaces &raquo; Capri - Classic object oriented JavaScript</title> <script src="http://shjs.sourceforge.net/sh_main.min.js"></script> <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/syntax.css" /> <meta name="description" content="Capri is an open source library that allows developers to use classes and namespaces in the more classical sense. Capri also provides dynamic script and style includes when jQuery plugin variant is used." /> <meta name="keywords" content="javascript, capri, jquery, jquery plugin, javascript framework, oop, object-oriented, classes, namespaces, classical, inheritance" /> <link rel="stylesheet" type="text/css" href="http://capri.rotorz.com/style/main.css" /> <link rel="stylesheet" type="text/css" media="print" href="http://capri.rotorz.com/style/print.css" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Capri Feed" href="http://rotorz.com/blog/category/capri/feed/" /> <link rel="alternate" type="application/rss+xml" title="Rotorz &raquo; Feed" href="http://rotorz.com/blog/feed/" /> <!--[if lt IE 9]> <script type="text/javascript" src="http://capri.rotorz.com/script/ie-html5-fix.js"></script> <![endif]--> <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-23827175-1']); _gaq.push(['_setDomainName', '.rotorz.com']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> </head> <body class="docs-page info-page narrow-page"> <div class="wrap"> <header id="page-header"> <nav class="site-nav"> <ul> <li class="first"><a href="http://capri.rotorz.com">Home</a></li> <li><a href="http://capri.rotorz.com/about.html">About</a></li> <li><a href="http://capri.rotorz.com/getting-started.html">Docs</a></li> <li class="last"><a href="http://rotorz.com/blog/category/capri">Blog</a></li> </ul> </nav> <a class="home" href="http://capri.rotorz.com"><img src="http://capri.rotorz.com/img/home.png" alt="Capri Title" /></a> <nav class="sub-nav"> <ul> <li><a href="http://capri.rotorz.com/getting-started.html">Getting Started</a></li> <li><a href="http://capri.rotorz.com/tutorial/index.html">Tutorials</a></li> <li><a href="http://capri.rotorz.com/docs/global.html">API</a></li> <li><a href="http://capri.rotorz.com/how-to-build.html">How to Build</a></li> </ul> </nav> </header> <div class="content-wrap"> <section class="content"> <h1>Using namespaces</h1> <p>Conflicts can occur when developing web applications that make extensive use of JavaScript. These
+are usually caused by naming conflicts which causes existing functionality to be overwritten. For
+example, if <samp>Math</samp> were to be defined in custom scripts then all scripts that are
+dependant would break. This can be avoided by defining custom functionality within a unique custom
+namespace.</p> <p>This is nothing new to JavaScript, however Capri provides a simple mechanism that makes defining,
+extending and using namespaces easier. For best results you should define a root most vendor specific
+namespace ("my" for purposes of this tutorial). Math functionality could be placed into its own
+namespace <samp>my.math</samp>.</p> <div class="info-box"><strong>Tip:</strong> We tend to use lower case identifiers for our namespaces
+so that class names are emphasised. With this convention <samp>my.Test</samp> clearly refers to a
+class whereas <samp>my.test</samp> could refer to a namespace, function or data member.</div> <h2>Define namespace</h2>
+<p>The Capri function <samp><a href="http://capri.rotorz.com/docs/global.html#$namespace">$namespace</a></samp>
+can be used to define our namespace. The first parameter identifies the namespace that we would like
+to define and the second parameter allows us to specify the functions and fields that need to be
+added to the namespace.</p> <p>The name of the namespace must be specifed using a string because the namespace does not exist
+yet. Attempting to specify as object would otherwise cause an error. A root namespace called
+<samp>my</samp> would be specified using <samp>"my"</samp>. A namespace inside <samp>my</samp> called
+<samp>math</samp> would be specified using <samp>"my.math"</samp>.</p> <p>Namespace members can then be defined within curly brackets using the same syntax that is used
+to define an object. The following source demonstrates the definition of our math namespace.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+// namespace identifier is specified as string because it has not yet been defined
+$namespace('my.math', {
+   // function that sums array of numbers
+   sum: function(numbers) {
+      var r = 0;
+      for (var i = 0; i < numbers.length; ++i)
+         r += numbers[i];
+      return r;
+   }
+});
+</code></pre> <p>The summation function can then be used by referencing the namespace:</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+var total = my.math.sum([ 1, 2, 3, 4, 5 ]);
+// outcome: 15
+</code></pre> <h2>Extend an existing namespace</h2>
+<p>Functionality can be added to an existing namespace using exactly the same technique. Existing
+functionality can be replaced simply by redefining it. The following example demonstrates how the
+function <samp>mean</samp> could be added:</p> <pre class="sh_sourceCode sh_javascript"><code>
+$namespace('my.math', {
+   mean: function(numbers) {
+      // note: this refers to my.math
+      return this.sum(numbers) / 2;
+   }
+});
+</code></pre> <div class="info-box"><strong>Note:</strong> An existing namespace can be specified using a string
+literal or by reference. The latter must only be done when the namespace has already been defined to
+avoid errors.</div> <h2>Using a namespace</h2>
+<p>Extensive use of a deeply nested namespace can be simplified by defining a temporary alias. This
+saves a little typing and may execute a little faster. Namespace can be specified by name or object.</p> <p>The custom alias is defined by the first argument of the callback function. Any valid JavaScript
+identifier can be used (name or abbreviation) for the alias. The alias can then be used to access
+the namespace instead!</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+$namespace.use('my.math', function(math) {
+   var average = math.mean([ 1, 2, 3, 4, 5 ]);
+   // outcome: 3
+});
+</code></pre> <h2>Using multiple namespaces</h2>
+<p>Aliases can be defined for multiple namespaces by providing an array of namespaces. Each callback
+argument defines an alias which must be listed in the same order as the namespaces.</p>
+<pre class="sh_sourceCode sh_javascript"><code>
+$namespace.use([ jQuery, my.math ], function($, math) {
+   // replace text in "average" element with new average
+   $('#average').text(math.mean([ 1, 2, 3, 4, 5 ]));
+});
+</code></pre> <h2>Summary</h2>
+<p>In this tutorial we have looked at what the purpose of namespaces is and how they can be defined
+and used with the Capri library.</p> <p><a href="intro-classes.html">Next tutorial: Introduction to classes</a></p> </section> <div id="website-license"> <div class="left"> <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> </div> <div class="right"> <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Capri Project Website</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rotorz.com" property="cc:attributionName" rel="cc:attributionURL">Rotorz Limited</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> </div> <div class="clear"></div>
+</div> </div> <footer id="page-footer"> <a class="rotorz-home" href="http://rotorz.com" title="Rotorz Limited Home Page"><img src="http://capri.rotorz.com/img/rotorz-badge.jpg" /></a> <nav> <ul> <li><a href="http://rotorz.com/blog/category/capri">Blog</a></li> <li><a href="http://capri.rotorz.com/contribute.html">Contribute</a></li> <li><a href="http://github.com/rotorz/capri">Repository</a></li> <li><a href="http://capri.rotorz.com/license.html">License</a></li> <li><a href="http://rotorz.com/projects">Projects</a></li> </ul> </nav> <small>&copy; 2010-2011 Rotorz Limited. All rights reserved.</small> </footer> </div> <script>sh_highlightDocument();</script> </body> </html>
