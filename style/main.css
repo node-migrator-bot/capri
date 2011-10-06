@@ -177,12 +177,15 @@ samp {
 	width: 1022px;
 	min-height: 100%;
 
-	background: #fff url('../img/sidebar-bk.jpg') repeat-y right top;
+	background: #fff;
 
 	box-shadow: 0px 0px 18px 8px #000;
 	-webkit-box-shadow: 0px 0px 18px 8px #000;
 	-moz-box-shadow: 0px 0px 18px 8px #000;
 }
+	.capri-api-docs .wrap {
+		background: #fff url('../img/sidebar-bk.jpg') repeat-y right top;
+	}
 
 #page-header {
 	height: 158px;
