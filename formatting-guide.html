@@ -108,11 +108,11 @@ web browsers. Instead 3 spaces should be used in place of each tab.</p> <p>View 
  *
  * @returns {string} URI with additional query string
  *
- * @throws {CapriError} Thrown when parameter is invalid
+ * @throws {capri.Error} Thrown when parameter is invalid
  */
 capri.appendQueryString = function(uri, query) {
    if (typeof uri !== 'string')
-      throw new CapriError("Expected string for 'uri'", 'invalid_param');
+      throw new capri.Error("Expected string for 'uri'", 'invalid_param');
 
    if (!!query) {
       if (typeof query !== 'string')
