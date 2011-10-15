@@ -29,6 +29,7 @@
 	margin-left: 16pt;
 }
 
+/* Unordered List */
 #doc-content .description ul,
 #doc-content .description ul li,
 #doc-content .summary ul,
@@ -42,6 +43,23 @@
 }
 #doc-content .description ul li,
 #doc-content .summary ul li {
+	margin-left: 16pt;
+}
+
+/* Ordered List */
+#doc-content .description ol,
+#doc-content .description ol li,
+#doc-content .summary ol,
+#doc-content .summary ol li {
+	list-style-type: decimal;
+	list-style-position: outside;
+}
+#doc-content .description ol,
+#doc-content .summary ol {
+	padding: 3pt;
+}
+#doc-content .description ol li,
+#doc-content .summary ol li {
 	margin-left: 16pt;
 }
 

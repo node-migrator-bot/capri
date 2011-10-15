@@ -244,13 +244,28 @@ samp {
 	top: 47px; left: 108px;
 }
 
-#page-header #find-out-more {
+#page-header #getting-started {
 	position: absolute;
 	top: 141px; left: 29px;
 }
-	.index-page #page-header #find-out-more {
-		top: 277px; left: 362px;
+#page-header #getting-started span {
+	display: block;
+	width: 197px;
+	height: 43px;
+
+	background: url('../img/getting-started.png') no-repeat left top;
+}
+	#page-header #getting-started:hover span,
+	#page-header #getting-started:focus span {
+		background: url('../img/getting-started-hot.png') no-repeat left top;
 	}
+	#page-header #getting-started:active span {
+		background: url('../img/getting-started-down.png') no-repeat left top;
+	}
+
+.index-page #page-header #find-out-more {
+	top: 277px; left: 362px;
+}
 #page-header #find-out-more span {
 	display: block;
 	width: 197px;
