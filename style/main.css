@@ -264,6 +264,7 @@ samp {
 	}
 
 .index-page #page-header #find-out-more {
+	position: absolute;
 	top: 277px; left: 362px;
 }
 #page-header #find-out-more span {
