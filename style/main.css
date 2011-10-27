@@ -147,6 +147,9 @@ samp {
 .clear {
 	clear: both;
 }
+.screen-reader {
+	display: none;
+}
 
 .info-box {
 	margin: 14pt 0;
@@ -244,83 +247,81 @@ samp {
 	top: 47px; left: 108px;
 }
 
+#page-header a span {
+	display: none;
+}
+
 #page-header #getting-started {
+	display: block;
 	position: absolute;
 	top: 141px; left: 29px;
-}
-#page-header #getting-started span {
-	display: block;
 	width: 197px;
 	height: 43px;
 
 	background: url('../img/getting-started.png') no-repeat left top;
 }
-	#page-header #getting-started:hover span,
-	#page-header #getting-started:focus span {
-		background: url('../img/getting-started-hot.png') no-repeat left top;
+	#page-header #getting-started:hover,
+	#page-header #getting-started:focus {
+		background-image: url('../img/getting-started-hot.png');
 	}
-	#page-header #getting-started:active span {
-		background: url('../img/getting-started-down.png') no-repeat left top;
+	#page-header #getting-started:active {
+		background-image: url('../img/getting-started-down.png');
 	}
 
 .index-page #page-header #find-out-more {
+	display: block;
 	position: absolute;
 	top: 277px; left: 362px;
-}
-#page-header #find-out-more span {
-	display: block;
 	width: 197px;
 	height: 43px;
 
 	background: url('../img/find-out-more.png') no-repeat left top;
 }
-	#page-header #find-out-more:hover span,
-	#page-header #find-out-more:focus span {
-		background: url('../img/find-out-more-hot.png') no-repeat left top;
+	#page-header #find-out-more:hover,
+	#page-header #find-out-more:focus {
+		background-image: url('../img/find-out-more-hot.png');
 	}
-	#page-header #find-out-more:active span {
-		background: url('../img/find-out-more-down.png') no-repeat left top;
+	#page-header #find-out-more:active {
+		background-image: url('../img/find-out-more-down.png');
 	}
 
-#page-header #download-standalone {
+#page-header #download-standalone,
+#page-header #download-plugin {
+	display: block;
 	position: absolute;
 	top: 125px; left: 497px;
+	width: 247px;
+	height: 76px;
 }
 	.index-page #page-header #download-standalone {
 		top: 167px; left: 752px;
 	}
 #page-header #download-plugin {
-	position: absolute;
-	top: 125px; left: 757px;
+	left: 757px;
 }
 	.index-page #page-header #download-plugin {
 		top: 261px; left: 752px;
 	}
-#page-header #download-standalone span,
-#page-header #download-plugin span {
-	display: block;
-	width: 247px;
-	height: 76px;
-}
-#page-header #download-standalone span {
+
+#page-header #download-standalone {
 	background: url('../img/download-standalone.png') no-repeat left top;
 }
-	#page-header #download-standalone:hover span,
-	#page-header #download-standalone:focus span {
-		background: url('../img/download-standalone-hot.png') no-repeat left top;
+	#page-header #download-standalone:hover,
+	#page-header #download-standalone:focus {
+		background-image: url('../img/download-standalone-hot.png');
 	}
-	#page-header #download-standalone:active span {
-		background: url('../img/download-standalone-down.png') no-repeat left top;
+	#page-header #download-standalone:active {
+		background-image: url('../img/download-standalone-down.png');
 	}
-#page-header #download-plugin span {
+#page-header #download-plugin {
 	background: url('../img/download-plugin.png') no-repeat left top;
 }
-	#page-header #download-plugin:hover span,
-	#page-header #download-plugin:focus span {
-		background: url('../img/download-plugin-hot.png') no-repeat left top;
+	#page-header #download-plugin:hover,
+	#page-header #download-plugin:focus {
+		background-image: url('../img/download-plugin-hot.png');
 	}
-	#page-header #download-plugin:active span {
-		background: url('../img/download-plugin-down.png') no-repeat left top;
+	#page-header #download-plugin:active {
+		background-image: url('../img/download-plugin-down.png');
 	}
 
 .content-wrap {
