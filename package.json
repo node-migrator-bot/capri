@@ -1,0 +1,19 @@
+{
+    "name": "capri",
+    "description": "Capri Library :: Clasic object oriented JavaScript",
+    "version": "0.1.0",
+
+    "homepage": "http://capri.rotorz.com",
+    "author": "Lea Hayes <lea@rotorz.com>",
+
+    "devDependencies": {
+    	"qunit": "0.2.8",
+    	"uglify-js": "1.2.5"
+	},
+
+	"test": "make test",
+	"prepublish" : "npm prune",
+
+	"keywords": ["framework", "library", "oop", "object-oriented", "class", "interface", "module", "jquery"],
+	"repository": "git://github.com/rotorz/capri"
+}

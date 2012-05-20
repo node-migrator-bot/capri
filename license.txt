@@ -1,0 +1,15 @@
+(c) 2010-2011 Rotorz Limited. All rights reserved.
+Rotorz Limited (http://rotorz.com)
+
+The Capri project (and all derivatives) are licensed under the terms of the
+BSD license or the GNU General Public License (GPL) Version 2.
+
+The BSD license is recommended for most projects because it imposes fewer
+restrictions than the GPL license. You are free to select which license to
+use. Please ensure that any copyright information is retained in source files
+(even when in minified form).
+
+Please refer to the relevant license text:
+
+BSD-LICENSE.txt - https://github.com/rotorz/capri/blob/master/BSD-LICENSE.txt
+GPL-LICENSE.txt - https://github.com/rotorz/capri/blob/master/GPL-LICENSE.txt
