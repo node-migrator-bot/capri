@@ -43,6 +43,9 @@ find this of use!
  - [API](http://capri.rotorz.com/docs/global.html)
  - [How to Build](http://capri.rotorz.com/how-to-build.html)
 
+## How to install node module?
+Install latest version using package manager with `npm install capri`
+
 ## How to Contribute?
 We have chosen to host our project using [GitHub](http://www.github.com). Please read
 the [contribution agreement](#contribution-agreement) before making *any* contributions.
