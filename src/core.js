@@ -160,8 +160,8 @@ capri._lastUID = 0;
 /**
  * Retrieve next unique ID
  *
- * Provides a unique identifier that can be used to associate dynamically generated content
- * with one another.
+ * Provides a unique identifier that can be used to associate dynamically generated
+ * content with one another.
  *
  * @example "Bind dynamic label to input"
  *
@@ -252,7 +252,7 @@ capri.arguments = function(args, start, count) {
  * @param {string|regex} [delimiter] Delimiter used when parsing arguments from string
  *
  * @returns *object* when `arr` is specified as object or string, *array* when `arr` is
- *    specified as array.
+ * specified as array.
  */
 capri.parseArgs = function(args, defaults, delimiter) {
 	if (!delimiter)

@@ -11,21 +11,28 @@
 /**
  * Define or access namespace 
  *
- * Namespace will be defined if it doesn't already exist. Members can be added to a namespace
- * by specifying an extension object (see Ex#3).
- *
- * Web applications often make extensive use of JavaScript to provide an extensive interactive
- * experience. Some of these scripts will be custom written whilst others may be third-party
- * libraries. Occasionally scripts will conflict with one another due to multiple use of the
- * same identifier.
- *
- * Conflicts can easily be avoided within custom written scripts by defining functions,
- * classes and variables within a vendor specific namespace. This function aims to ease
- * namespace usage.
+ * Namespace will be defined if it doesn't already exist. Members can be added to a
+ * namespace by specifying an extension object (see Ex#3).
  *
  * ```warning
- * Cannot lookup module namespace by name. Please specify `exports` object as first parameter
- * to access module scope.
+ * Cannot lookup module namespace by name. Please specify `exports` object as first
+ * parameter to access module scope.
+ * ```
+ *
+ * Applications will often make use of multiple scripts (possibly from multiple vendors).
+ * This can introduce naming conflicts which can lead to many undesirable outcomes. This
+ * problem can be overcome by placing functions, variables, etc into vendor-specific
+ * namespaces and/or modules.
+ *
+ * This function aims to make the process of working with namespaces easier. The global
+ * namespace acts as the root for all namespaces. This means that a namespace called
+ * `my.special.namespace` can be accessed via `global.my.special.namespace` (in node).
+ *
+ * ```note
+ * Do not clutter the global namespace because this will often lead to trouble! Instead
+ * define things within a vendor specific namespace.
+ *
+ * For example, `mycompany.math.Vector3`.
  * ```
  *
  * @example "Access namespace"
@@ -39,8 +46,8 @@
  * ```source
  * capri.ns('my.special');
  *
- * // The following would fail if "my" namespace had not been defined. Above use
- * // of capri.ns avoids ReferenceError exception.
+ * // The following would fail if "my" namespace had not been defined. The `capri.ns`
+ * function conveniently avoids the `ReferenceError` exception.
  * if (my.special.foo)
  *    my.special.foo();
  * ```
@@ -58,14 +65,16 @@
  *
  * ```source
  * // Easy way to access global namespace:
- * $global.globalVar = 42;
- * capri.ns($global, {
+ * capri.global.globalVar = 42;
+ *
+ * // Add definitions to global namespace with object notation:
+ * capri.ns(capri.global, {
  *    globalFunction: function() {
  *       console.log('Global function!');
  *    }
  * })
  *
- * // Alternative:
+ * // Equivalents:
  * capri.ns('').globalVar = 42;
  * capri.ns('', {
  *    globalFunction: function() {
@@ -84,8 +93,8 @@
  * Acquire access to an existing namespace
  *
  * ```warning
- * Cannot lookup module namespace by name. Please specify `exports` object as first parameter
- * to access module scope.
+ * Cannot lookup module namespace by name. Please specify `exports` object as first
+ * parameter to access module scope.
  * ```
  *
  * @example "Find out if namespace is defined"
@@ -100,7 +109,7 @@
  *
  * @param {string|object} ns Namespace to lookup
  * @param {string} [subns] Sub namespace to lookup
- * @param {boolean} define <samp>false</samp> prevents namespace from being defined
+ * @param {boolean} define `false` prevents namespace from being defined
  *
  * @returns {object|undefined} Namespace object or `undefined` if namespace is not defined.
  */
@@ -152,23 +161,23 @@
  *
  * ```source
  * capri.ns.id('my.special.namespace');
- * // "namespace"
+ * // -> "namespace"
  * ```
  *
  * @example "Module namespace"
  *
  * ```source
  * capri.ns.id('module:my/module#special.namespace');
- * // "namespace"
+ * // -> "namespace"
  * ```
  *
  * @param {string} qid Namespace qualified identifier
  *
- * @returns {string} Identifier as string
+ * @returns {string} Identifier or `null` when id not present.
  */
 capri.ns.id = function(qid) {
 	var m = qid.match(/[^#.]*$/);
-	return m !== null ? m[0] : null;
+	return ( m !== null && m[0] !== '' && m[0].indexOf('module:') === -1 ) ? m[0] : null;
 }
 
 /**
@@ -178,14 +187,14 @@ capri.ns.id = function(qid) {
  *
  * ```source
  * capri.ns.baseName('my.special.namespace');
- * // "my.special"
+ * // -> "my.special"
  * ```
  *
  * @example "Module namespace"
  *
  * ```source
  * capri.ns.baseName('module:my/module#special.namespace');
- * // "special"
+ * // -> "special"
  * ```
  *
  * @param {string} qid Namespace qualified identifier
@@ -196,8 +205,12 @@ capri.ns.id = function(qid) {
  * ```
  */
 capri.ns.baseName = function(qid) {
-	var m = qid.match(/(^.*)\./);
-	return m !== null ? m[1] : null;
+	var m = qid.match(/((^|#)[^#]+)\./);
+	return m !== null
+		? ( m[1][0] === '#'
+			? m[1].substr(1)
+			: m[1] )
+		: '';
 }
 
 /**
@@ -207,14 +220,14 @@ capri.ns.baseName = function(qid) {
  *
  * ```source
  * capri.ns.moduleName('my.special.namespace');
- * // null
+ * // -> null
  * ```
  *
  * @example "Module namespace"
  *
  * ```source
  * capri.ns.moduleName('module:my/module#special.namespace');
- * // "my/module"
+ * // -> "my/module"
  * ```
  *
  * @param {string} qid Namespace qualified identifier

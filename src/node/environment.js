@@ -17,7 +17,7 @@ capri.env = {
 	 * Version numbers for Capri and plugins
 	 */
 	versions: {
-		capri: '0.1.4'
+		capri: '0.1.0'
 	},
 
 	/**

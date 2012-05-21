@@ -98,10 +98,12 @@ capri.Object.prototype.getFullClassName = function() {
  *
  * ```source
  * vector = new mygame.Vector2d();
- * vector.toString(); // "[mygame.Vector2d : capri.Object]"
+ * vector.toString();
+ * // -> "[mygame.Vector2d : capri.Object]"
  *
  * key = new mygame.Key(0, 0, 'yellow');
- * key.toString(); // "[mygame.Key : mygame.Entity]"
+ * key.toString();
+ * // -> "[mygame.Key : mygame.Entity]"
  * ```
  *
  * @returns {string}
@@ -118,7 +120,8 @@ capri.Object.prototype.toString = function() {
  * @example
  *
  * ```source
- * mygame.Key.getFullName(); // "mygame.Key"
+ * mygame.Key.getFullName();
+ * // -> "mygame.Key"
  * ```
  *
  * @returns {string} Full name of class
@@ -133,7 +136,8 @@ capri.Object.getFullName = function() {
  * @example
  *
  * ```source
- * mygame.Key.getName(); // "Key"
+ * mygame.Key.getName();
+ * // -> "Key"
  * ```
  *
  * @returns {string} Name of class
@@ -148,7 +152,8 @@ capri.Object.getName = function() {
  * @example
  *
  * ```source
- * mygame.Key.getNamespace(); // "mygame"
+ * mygame.Key.getNamespace();
+ * // -> "mygame"
  * ```
  *
  * @returns {string} Namespace of class
@@ -166,7 +171,8 @@ capri.Object.getNamespace = function() {
  * capri.run(function(require) {
  *    var mymath = require('my/math')
  *       ;
- *    mymath.Vector.getModule(); // "my/math"
+ *    mymath.Vector.getModule();
+ *    // -> "my/math"
  * })
  * ```
  *
@@ -182,9 +188,14 @@ capri.Object.getModuleName = function() {
  * @example
  *
  * ```source
- * mygame.Key.getSuper();    // mygame.Entity
- * mygame.Entity.getSuper(); // capri.Object
- * capri.Object.getSuper();  // null
+ * mygame.Key.getSuper();
+ * // -> mygame.Entity
+ *
+ * mygame.Entity.getSuper();
+ * // -> capri.Object
+ *
+ * capri.Object.getSuper();
+ * // -> null
  * ```
  *
  * @returns {object|null} Class reference or `null`
@@ -210,10 +221,17 @@ capri.Object.getSubClasses = function() {
  * @example
  *
  * ```source
- * mygame.Key.is(mygame.Key);      // true
- * mygame.Key.is(mygame.Entity);   // true
- * mygame.Entity.is(capri.Object); // true
- * mygame.Entity.is(mygame.Key);   // false
+ * mygame.Key.is(mygame.Key);
+ * // -> true
+ *
+ * mygame.Key.is(mygame.Entity);
+ * // -> true
+ *
+ * mygame.Entity.is(capri.Object);
+ * // -> true
+ *
+ * mygame.Entity.is(mygame.Key);
+ * // -> false
  * ```
  *
  * @param {string|object} Name of class or class reference
@@ -277,7 +295,8 @@ capri.Object.getInterfaces = function() {
  * })
  *
  * var obj = new Test();
- * obj.baz; // undefined
+ * obj.baz;
+ * // -> undefined
  *
  * Test.add({
  *    bar: function() {
@@ -294,9 +313,11 @@ capri.Object.getInterfaces = function() {
  *
  * });
  *
- * obj.baz; // 42
+ * obj.baz;
+ * // -> 42
  *
- * Test.magic(); // Hello World!
+ * Test.magic();
+ * // -> "Hello World!"
  * ```
  *
  * @param {object} body Instance and/or static members
