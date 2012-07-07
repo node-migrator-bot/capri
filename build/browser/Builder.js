@@ -47,7 +47,7 @@ Builder.prototype.build = function() {
 	var combined = this.combineSources(sources);
 
 	// Create output directory?
-	if (!path.existsSync(this.outputPath()))
+	if (!fs.existsSync(this.outputPath()))
 		fs.mkdirSync(this.outputPath(), 0755);
 
 	// Output combined file
